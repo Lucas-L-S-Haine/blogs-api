@@ -1,20 +1,24 @@
 const express = require('express');
+const {
+  readAll, createOne, readMany,
+  readOne, updateOne, deleteOne,
+} = require('../contollers/postController');
 
 const postRouter = express.Router();
 
 postRouter
   .route('/')
-  .get()
-  .post();
+  .get(readAll)
+  .post(createOne);
 
 postRouter
   .route('/search')
-  .get();
+  .get(readMany);
 
 postRouter
   .route('/:id')
-  .get()
-  .put()
-  .delete();
+  .get(readOne)
+  .put(updateOne)
+  .delete(deleteOne);
 
 module.exports = postRouter;
