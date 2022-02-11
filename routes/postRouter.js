@@ -2,7 +2,7 @@ const express = require('express');
 const {
   readAll, createOne, readMany,
   readOne, updateOne, deleteOne,
-} = require('../contollers/postController');
+} = require('../controllers/postController');
 
 const postRouter = express.Router();
 
