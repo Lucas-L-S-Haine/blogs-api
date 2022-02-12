@@ -7,11 +7,12 @@ const app = express();
 
 app.listen(3000, () => console.log('ouvindo porta 3000!'));
 
+app.use(express.json());
 // app.use(router);
 app.post('/user', async (req, res) => {
+  const { displayName, email, password, image } = req.body;
   console.log(req.body);
   try {
-    const { displayName, email, password, image } = req.body;
     console.log(displayName);
     await User.create({ displayName, email, password, image });
     return res.status(201).json({ token: 'aslfkjasdf802' });
