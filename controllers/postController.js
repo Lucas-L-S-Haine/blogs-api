@@ -1,19 +1,19 @@
-const readAll = async (req, res) => {
+const readAll = async (_req, _res) => {
 };
 
-const createOne = async (req, res) => {
+const createOne = async (_req, _res) => {
 };
 
-const readMany = async (req, res) => {
+const readMany = async (_req, _res) => {
 };
 
-const readOne = async (req, res) => {
+const readOne = async (_req, _res) => {
 };
 
-const updateOne = async (req, res) => {
+const updateOne = async (_req, _res) => {
 };
 
-const deleteOne = async (req, res) => {
+const deleteOne = async (_req, _res) => {
 };
 
 module.exports = {

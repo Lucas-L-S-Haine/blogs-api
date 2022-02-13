@@ -1,5 +1,5 @@
 const {
-  isValidName, isValidEmail, isValidPassword,
+  isValidEmail, isValidPassword,
 } = require('../utils/functions');
 
 const newError = (input) => (input);
