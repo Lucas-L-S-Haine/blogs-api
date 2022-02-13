@@ -16,6 +16,12 @@ const readAll = async () => {
 
 const createOne = async (user) => {
   userValidate(user);
+  if (await User.findOne({ where: { email: user.email } })) {
+    const error = new Error();
+    error.status = 409;
+    error.message = 'User already registered';
+    throw error;
+  }
   const token = newToken(user);
   await User.create(user);
   return token;
