@@ -3,6 +3,9 @@ const { newToken } = require('../auth');
 const { userValidate } = require('../validations');
 
 const readOne = async () => {
+//   const users = await User
+//     .findOne({ where: { email } });
+//   return users;
 };
 
 const readAll = async () => {

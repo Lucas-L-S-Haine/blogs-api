@@ -1,6 +1,5 @@
-const { newToken, validateToken } = require('./validateJWT');
+const validateJWT = require('./validateJWT');
 
 module.exports = {
-  newToken,
-  validateToken,
+  ...validateJWT,
 };

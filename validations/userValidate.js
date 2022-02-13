@@ -2,13 +2,16 @@ const {
   isValidName, isValidEmail, isValidPassword,
 } = require('../utils/functions');
 
+const newError = (input) => (input);
+
 const validateName = (user) => {
-  const error = new Error();
-  if (!isValidName(user.displayName)) {
-    error.status = 400;
-    error.message = '"displayName" length must be at least 8 characters long';
-    throw error;
+  if (user.displayName.length < 8) {
+    throw newError({
+      status: 400,
+      message: '"displayName" length must be at least 8 characters long',
+    });
   }
+  return true;
 };
 
 const validateEmail = (user) => {
@@ -23,6 +26,7 @@ const validateEmail = (user) => {
     error.message = '"email" must be a valid email';
     throw error;
   }
+  return true;
 };
 
 const validatePassword = (user) => {
@@ -37,10 +41,12 @@ const validatePassword = (user) => {
     error.message = '"password" length must be 6 characters long';
     throw error;
   }
+  return true;
 };
 
 module.exports = (user) => {
   validatePassword(user);
   validateEmail(user);
   validateName(user);
+  return true;
 };

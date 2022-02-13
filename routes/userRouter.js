@@ -2,12 +2,13 @@ const express = require('express');
 const {
   readOne, readAll, createOne, deleteOne,
 } = require('../controllers/userController');
+const { validateToken } = require('../auth');
 
 const userRouter = express.Router();
 
 userRouter
   .route('/')
-  .get(readAll)
+  .get(validateToken, readAll)
   .post(createOne);
 
 userRouter

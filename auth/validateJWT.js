@@ -1,3 +1,4 @@
+require('dotenv/config');
 const jwt = require('jsonwebtoken');
 
 const { JWT_SECRET: secret } = process.env;
@@ -6,10 +7,9 @@ const jwtConfig = {
   algorithm: 'HS256',
 };
 
-const newToken = async (user) => {
-  const payload = user;
-  delete payload.password;
-  const token = jwt.sign(payload, secret, jwtConfig);
+const newToken = (user) => {
+  const { displayName, email } = user;
+  const token = jwt.sign({ displayName, email }, secret, jwtConfig);
   return token;
 };
 
@@ -18,7 +18,7 @@ const validateToken = (req, _res, next) => {
   if (!token) {
     const error = new Error();
     error.status = 401;
-    error.message = 'missing auth token';
+    error.message = 'Token not found';
     throw error;
   }
   try {
@@ -26,7 +26,7 @@ const validateToken = (req, _res, next) => {
   } catch (err) {
     const error = new Error();
     error.status = 401;
-    error.message = 'jwt malformed';
+    error.message = 'Expired or invalid token';
     throw error;
   }
   const payload = jwt.verify(token, secret);
