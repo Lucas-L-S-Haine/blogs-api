@@ -14,7 +14,7 @@ const newToken = (user) => {
 };
 
 const validateToken = (req, _res, next) => {
-  const token = req.headers.authorization;
+  const { authorization: token } = req.headers;
   if (!token) {
     const error = new Error();
     error.status = 401;

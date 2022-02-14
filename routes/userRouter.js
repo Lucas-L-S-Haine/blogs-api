@@ -13,10 +13,10 @@ userRouter
 
 userRouter
   .route('/:id')
-  .get(readOne);
+  .get(validateToken, readOne);
 
 userRouter
   .route('/me')
-  .delete(deleteOne);
+  .delete(validateToken, deleteOne);
 
 module.exports = userRouter;

@@ -1,15 +1,21 @@
 const service = require('../services/userService');
 
-const readOne = async () => {
+const readOne = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const user = await service.readOne(id);
+    return res.status(200).json(user);
+  } catch (err) {
+    return res.status(err.status).json({ message: err.message });
+  }
 };
 
 const readAll = async (req, res) => {
   try {
-    const { authorization: token } = req.headers;
-    const users = await service.readAll(token);
+    const users = await service.readAll();
     return res.status(200).json(users);
   } catch (err) {
-    res.status(err.status).json({ message: err.message });
+    return res.status(err.status).json({ message: err.message });
   }
 };
 
@@ -23,7 +29,15 @@ const createOne = async (req, res) => {
   }
 };
 
-const deleteOne = async () => {
+// Requisito bônus
+const deleteOne = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await service.deleteOne(id);
+    return res.status(204).send();
+  } catch (err) {
+    return res.status(err.status).send({ message: err.message });
+  }
 };
 
 module.exports = { readOne, readAll, createOne, deleteOne };

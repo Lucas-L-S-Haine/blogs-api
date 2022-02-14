@@ -2,10 +2,15 @@ const { User } = require('../models');
 const { newToken } = require('../auth');
 const { userValidate } = require('../validations');
 
-const readOne = async () => {
-//   const users = await User
-//     .findOne({ where: { email } });
-//   return users;
+const readOne = async (id) => {
+  const user = await User.findByPk(id, { attributes: { exclude: ['password'] } });
+  if (!user) {
+    const error = new Error();
+    error.status = 404;
+    error.message = 'User does not exist';
+    throw error;
+  }
+  return user;
 };
 
 const readAll = async () => {
@@ -27,7 +32,9 @@ const createOne = async (user) => {
   return token;
 };
 
-const deleteOne = async () => {
+// Requisito bônus
+const deleteOne = async (id) => {
+  await User.destroy({ where: { id } });
 };
 
 module.exports = { readOne, readAll, createOne, deleteOne };
