@@ -33,8 +33,8 @@ const createOne = async (user) => {
 };
 
 // Requisito bônus
-const deleteOne = async (id) => {
-  await User.destroy({ where: { id } });
-};
+// const deleteOne = async (id) => {
+//   await User.destroy({ where: { id } });
+// };
 
-module.exports = { readOne, readAll, createOne, deleteOne };
+module.exports = { readOne, readAll, createOne /* deleteOne */ };

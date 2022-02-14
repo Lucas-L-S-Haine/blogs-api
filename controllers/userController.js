@@ -29,15 +29,18 @@ const createOne = async (req, res) => {
   }
 };
 
+const deleteOne = async (_req, res) => res.status(400)
+  .send({ message: 'Awaiting implementation' });
+
 // Requisito bônus
-const deleteOne = async (req, res) => {
-  try {
-    const { id } = req.params;
-    await service.deleteOne(id);
-    return res.status(204).send();
-  } catch (err) {
-    return res.status(err.status).send({ message: err.message });
-  }
-};
+// const deleteOne = async (req, res) => {
+//   try {
+//     const { id } = req.params;
+//     await service.deleteOne(id);
+//     return res.status(204).send();
+//   } catch (err) {
+//     return res.status(err.status).send({ message: err.message });
+//   }
+// };
 
 module.exports = { readOne, readAll, createOne, deleteOne };
