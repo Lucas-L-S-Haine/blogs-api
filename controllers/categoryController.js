@@ -11,8 +11,8 @@ const readAll = async (req, res) => {
 
 const createOne = async (req, res) => {
   try {
-    const { name } = req.body;
-    const result = await service.createOne(name);
+    const category = req.body;
+    const result = await service.createOne(category);
     return res.status(201).json(result);
   } catch (err) {
     return res.status(err.status).send({ message: err.message });
