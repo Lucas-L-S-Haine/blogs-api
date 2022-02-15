@@ -12,7 +12,6 @@ const validateEmail = (loginData) => {
     error.message = '"email" is required';
     throw error;
   }
-  return true;
 };
 
 const validatePassword = (loginData) => {
@@ -27,11 +26,9 @@ const validatePassword = (loginData) => {
     error.message = '"password" is required';
     throw error;
   }
-  return true;
 };
 
 module.exports = (loginData) => {
   validateEmail(loginData);
   validatePassword(loginData);
-  return true;
 };

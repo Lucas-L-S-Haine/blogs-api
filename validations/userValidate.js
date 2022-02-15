@@ -23,7 +23,6 @@ const validateEmail = (user) => {
     error.message = '"email" must be a valid email';
     throw error;
   }
-  return true;
 };
 
 const validatePassword = (user) => {
@@ -38,12 +37,10 @@ const validatePassword = (user) => {
     error.message = '"password" length must be 6 characters long';
     throw error;
   }
-  return true;
 };
 
 module.exports = (user) => {
   validatePassword(user);
   validateEmail(user);
   validateName(user);
-  return true;
 };
