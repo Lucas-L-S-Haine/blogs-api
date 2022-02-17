@@ -3,22 +3,23 @@ const {
   readAll, createOne, readMany,
   readOne, updateOne, deleteOne,
 } = require('../controllers/postController');
+const { validateToken } = require('../auth');
 
 const postRouter = express.Router();
 
 postRouter
   .route('/')
-  .get(readAll)
-  .post(createOne);
+  .get(validateToken, readAll)
+  .post(validateToken, createOne);
 
 postRouter
   .route('/search')
-  .get(readMany);
+  .get(validateToken, readMany);
 
 postRouter
   .route('/:id')
-  .get(readOne)
-  .put(updateOne)
-  .delete(deleteOne);
+  .get(validateToken, readOne)
+  .put(validateToken, updateOne)
+  .delete(validateToken, deleteOne);
 
 module.exports = postRouter;
