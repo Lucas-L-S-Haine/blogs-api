@@ -32,8 +32,8 @@ const createOne = async (user) => {
   return token;
 };
 
-const deleteOne = async (id) => {
-  await User.destroy({ where: { id } });
+const deleteOne = async (email) => {
+  await User.destroy({ where: { email } });
 };
 
 module.exports = { readOne, readAll, createOne, deleteOne };

@@ -34,8 +34,7 @@ const deleteOne = async (req, res) => {
   try {
     const { authorization: token } = req.headers;
     const { email } = readToken(token);
-    console.log(email);
-    // await service.deleteOne(id);
+    await service.deleteOne(email);
     return res.status(204).send();
   } catch (err) {
     return res.status(err.status).send({ message: err.message });
