@@ -13,6 +13,8 @@ const newToken = (user) => {
   return token;
 };
 
+const readToken = (token) => jwt.decode(token);
+
 const validateToken = (req, _res, next) => {
   const { authorization: token } = req.headers;
   if (!token) {
@@ -36,5 +38,6 @@ const validateToken = (req, _res, next) => {
 
 module.exports = {
   newToken,
+  readToken,
   validateToken,
 };
