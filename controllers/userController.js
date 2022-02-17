@@ -1,4 +1,5 @@
 const service = require('../services/userService');
+const { readToken } = require('../auth');
 
 const readOne = async (req, res) => {
   try {
@@ -31,8 +32,10 @@ const createOne = async (req, res) => {
 
 const deleteOne = async (req, res) => {
   try {
-    const { id } = req.params;
-    await service.deleteOne(id);
+    const { authorization: token } = req.headers;
+    const { email } = readToken(token);
+    console.log(email);
+    // await service.deleteOne(id);
     return res.status(204).send();
   } catch (err) {
     return res.status(err.status).send({ message: err.message });
