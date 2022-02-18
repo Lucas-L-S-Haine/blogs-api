@@ -1,11 +1,13 @@
 const {
-  /* User, */
-  /* Categories: Category, */
+  User,
+  Categories: Category,
   BlogPosts: BlogPost,
-  /* PostCategories: PostCategory, */
+  PostCategories: PostCategory,
 } = require('../models');
 
-const createOne = async () => {};
+const createOne = async (post) => {
+  return blogPost;
+};
 
 const readAll = async () => {};
 

@@ -1,8 +1,9 @@
 const service = require('../services/postService');
 
-const createOne = async (_req, res) => {
+const createOne = async (req, res) => {
   try {
-    const blogPost = await service.createOne(); // aguardando implementação
+    const newPost = req.body;
+    const blogPost = await service.createOne(newPost); // aguardando implementação
     return res.status(201).json(blogPost);
   } catch (err) {
     return res.status(err.status).send({ message: err.message });
@@ -40,7 +41,6 @@ const deleteOne = async (req, res) => {
   try {
     const { id } = req.params;
     await service.deleteOne(id); // aguardando implementação
-    // Em caso de sucesso:
     return res.status(204).send();
   } catch (err) {
     return res.status(err.status).send({ message: err.message });
