@@ -11,7 +11,8 @@ const createOne = async (loginData) => {
     error.message = 'Invalid fields';
     throw error;
   }
-  const token = newToken(loginData);
+  const { password: none, ...data } = user[0].dataValues;
+  const token = newToken(data);
   return token;
 };
 

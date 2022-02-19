@@ -2,11 +2,22 @@ const {
   User,
   Categories: Category,
   BlogPosts: BlogPost,
-  PostCategories: PostCategory,
+  PostsCategories: PostCategory,
 } = require('../models');
 
-const createOne = async (post) => {
-  return blogPost;
+const insertCategories = (categoryIds, postId) => {
+  PostCategory.bulkCreate(
+    categoryIds.map((categoryId) => ({ categoryId, postId })),
+  );
+};
+
+const createOne = async (userInput, userId) => {
+  const post = { ...userInput, userId };
+  const { categoryIds } = userInput;
+  const newPost = await BlogPost.create(post);
+  const { id: postId } = newPost;
+  await insertCategories(categoryIds, postId);
+  return true;
 };
 
 const readAll = async () => {};

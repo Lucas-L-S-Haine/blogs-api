@@ -1,12 +1,16 @@
 const service = require('../services/postService');
+const { readToken } = require('../auth');
 
 const createOne = async (req, res) => {
   try {
-    const newPost = req.body;
-    const blogPost = await service.createOne(newPost); // aguardando implementação
+    const userInput = req.body;
+    const { authorization: token } = req.headers;
+    const { id: userId } = readToken(token);
+    const blogPost = await service.createOne(userInput, userId);
     return res.status(201).json(blogPost);
   } catch (err) {
-    return res.status(err.status).send({ message: err.message });
+    return res.send({ err });
+    // return res.status(err.status).send({ message: err.message });
   }
 };
 
