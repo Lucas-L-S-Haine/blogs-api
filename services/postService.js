@@ -12,19 +12,18 @@ const { postValidate } = require('../validations');
 //   );
 // };
 
+const newError = (error) => (error);
+
 const createOne = async (userInput, userId) => {
   postValidate(userInput);
-  const post = { ...userInput, userId };
   const { categoryIds } = userInput;
-  let category;
-  for (let index = 0; index < categoryIds.length; index += 1) {
-    category = Category.findByPk(categoryIds[index]);
-    if (!category) {
-      const error = new Error();
-      error.status = 400;
-      error.message = '"categoryIds" not found';
-    }
-  }
+  const categories = await Category.findAll({ attributes: ['id'] });
+  const categoryList = categories.map((category) => category.dataValues.id);
+  const invalidIds = categoryIds
+    .filter((id) => categoryList.indexOf(id) === -1);
+  if (invalidIds.length > 0) throw newError({ status: 400, message: '"categoryIds" not found' });
+  const post = { ...userInput, userId };
+  console.log('categories\n', invalidIds);
   const newPost = await BlogPost.create(post);
   // const { id: postId } = newPost;
   // await insertCategories(categoryIds, postId);
