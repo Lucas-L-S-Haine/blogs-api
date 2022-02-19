@@ -9,8 +9,7 @@ const createOne = async (req, res) => {
     const blogPost = await service.createOne(userInput, userId);
     return res.status(201).json(blogPost);
   } catch (err) {
-    return res.send({ err });
-    // return res.status(err.status).send({ message: err.message });
+    return res.status(err.status).send({ message: err.message });
   }
 };
 
