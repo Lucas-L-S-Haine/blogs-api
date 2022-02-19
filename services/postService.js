@@ -1,23 +1,32 @@
 const {
   /* User, */
-  /* Categories: Category, */
+  Categories: Category,
   BlogPosts: BlogPost,
-  PostsCategories: PostCategory,
+  // PostsCategories: PostCategory,
 } = require('../models');
 const { postValidate } = require('../validations');
 
-const insertCategories = (categoryIds, postId) => {
-  PostCategory.bulkCreate(
-    categoryIds.map((categoryId) => ({ categoryId, postId })),
-  );
-};
+// const insertCategories = (categoryIds, postId) => {
+//   PostCategory.bulkCreate(
+//     categoryIds.map((categoryId) => ({ categoryId, postId })),
+//   );
+// };
 
 const createOne = async (userInput, userId) => {
   postValidate(userInput);
   const post = { ...userInput, userId };
   const { categoryIds } = userInput;
+  let category;
+  for (let index = 0; index < categoryIds.length; index += 1) {
+    category = Category.findByPk(categoryIds[index]);
+    if (!category) {
+      const error = new Error();
+      error.status = 400;
+      error.message = '"categoryIds" not found';
+    }
+  }
   const newPost = await BlogPost.create(post);
-  const { id: postId } = newPost;
+  // const { id: postId } = newPost;
   // await insertCategories(categoryIds, postId);
   return newPost;
 };
