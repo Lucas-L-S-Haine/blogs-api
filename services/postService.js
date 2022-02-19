@@ -1,16 +1,10 @@
 const {
-  /* User, */
+  User,
   Categories: Category,
   BlogPosts: BlogPost,
   // PostsCategories: PostCategory,
 } = require('../models');
 const { postValidate } = require('../validations');
-
-// const insertCategories = (categoryIds, postId) => {
-//   PostCategory.bulkCreate(
-//     categoryIds.map((categoryId) => ({ categoryId, postId })),
-//   );
-// };
 
 const newError = (error) => (error);
 
@@ -25,12 +19,21 @@ const createOne = async (userInput, userId) => {
   const post = { ...userInput, userId };
   console.log('categories\n', invalidIds);
   const newPost = await BlogPost.create(post);
-  // const { id: postId } = newPost;
-  // await insertCategories(categoryIds, postId);
   return newPost;
 };
 
-const readAll = async () => {};
+const readAll = async () => {
+  const posts = await BlogPost.findAll({
+    include: [
+      {
+        model: User,
+        as: 'user',
+        attributes: { exclude: ['password'] },
+      },
+    ],
+  });
+  return posts;
+};
 
 const readOne = async () => {};
 

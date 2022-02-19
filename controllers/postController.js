@@ -15,7 +15,7 @@ const createOne = async (req, res) => {
 
 const readAll = async (_req, res) => {
   try {
-    const allPosts = await service.readAll(); // aguardando implementação
+    const allPosts = await service.readAll();
     return res.status(200).json(allPosts);
   } catch (err) {
     return res.status(err.status).send({ message: err.message });
