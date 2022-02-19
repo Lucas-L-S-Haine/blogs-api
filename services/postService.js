@@ -4,6 +4,7 @@ const {
   BlogPosts: BlogPost,
   PostsCategories: PostCategory,
 } = require('../models');
+const { postValidate } = require('../validations');
 
 const insertCategories = (categoryIds, postId) => {
   PostCategory.bulkCreate(
@@ -12,6 +13,7 @@ const insertCategories = (categoryIds, postId) => {
 };
 
 const createOne = async (userInput, userId) => {
+  postValidate(userInput);
   const post = { ...userInput, userId };
   const { categoryIds } = userInput;
   const newPost = await BlogPost.create(post);
