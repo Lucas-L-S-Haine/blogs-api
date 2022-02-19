@@ -18,8 +18,8 @@ const createOne = async (userInput, userId) => {
   const { categoryIds } = userInput;
   const newPost = await BlogPost.create(post);
   const { id: postId } = newPost;
-  await insertCategories(categoryIds, postId);
-  return true;
+  // await insertCategories(categoryIds, postId);
+  return newPost;
 };
 
 const readAll = async () => {};

@@ -20,7 +20,7 @@ const validateCategories = (post) => {
   const error = new Error();
   if (!post.categoryIds) {
     error.status = 400;
-    error.message = '"categoryId" is required';
+    error.message = '"categoryIds" is required';
     throw error;
   }
 };
