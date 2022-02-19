@@ -1,6 +1,6 @@
 const {
-  User,
-  Categories: Category,
+  /* User, */
+  /* Categories: Category, */
   BlogPosts: BlogPost,
   PostsCategories: PostCategory,
 } = require('../models');
