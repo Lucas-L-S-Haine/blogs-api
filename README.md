@@ -81,7 +81,7 @@ Para fazer um post é necessário usuário e login, portanto será trabalhada a 
 
   - Serão `3` dias de projeto.
 
-  - Data de entrega para avaliação final do projeto: `15/02/2020 - 14:00h`.
+  - Data de entrega para avaliação final do projeto: `15/02/2020 - 19:30h`.
 
 ---
 
@@ -446,7 +446,7 @@ Se o usuário cadastrar o campo "email" com um email que já existe, o resultado
   }
   ```
 
-- Caso algum desses campos seja inválido ou não exista um usuário correspondente no banco de dados, retorne um código de status 400 com o corpo `{ message: "Campos inválidos" }`.
+- Caso algum desses campos seja inválido ou não exista um usuário correspondente no banco de dados, retorne um código de status 400 com o corpo `{ message: "Invalid fields" }`.
 
 - Caso esteja tudo certo com o login, a resposta deve ser um token `JWT`, no seguinte formato:
 
