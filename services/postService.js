@@ -52,17 +52,16 @@ const readOne = async (id) => {
   const post = await BlogPost.findByPk(id,
     {
         include: [
-          {
-            model: User,
-            as: 'user',
-            attributes: { exclude: ['password'] },
-          },
-    //      {
-    //        model: Category,
-    //        as: 'categories',
-    //      },
+          { model: User, as: 'user', attributes: { exclude: ['password'] } },
+          { model: Category, as: 'categories', through: { model: PostCategory, attributes: [] } },
         ],
   });
+  if (!post) {
+    const error = new Error();
+    error.status = 404;
+    error.message = 'Post does not exist';
+    throw error;
+  }
   return post;
 };
 

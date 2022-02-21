@@ -18,7 +18,6 @@ const readAll = async (_req, res) => {
     const allPosts = await service.readAll();
     return res.status(200).json(allPosts);
   } catch (err) {
-    console.log(err.message);
     return res.status(err.status).send({ message: err.message });
   }
 };
