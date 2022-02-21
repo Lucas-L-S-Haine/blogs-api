@@ -3,7 +3,7 @@ const {
   User,
   Categories: Category,
   BlogPosts: BlogPost,
-  PostsCategories: PostCategory,
+  /* PostsCategories: PostCategory, */
 } = require('../models');
 const { postValidate } = require('../validations');
 
@@ -20,7 +20,7 @@ const createOne = async (userInput, userId) => {
   const post = { ...userInput, userId };
   // const newPost = await BlogPost.create(post);
   const newPost = await BlogPost.create(post, { transaction });
-  const { postId } = newPost;
+  // const { postId } = newPost;
 //  categoryIds
 //    .map((categoryId) => ({ postId, categoryId }))
 //    .forEach(async (obj) => { await PostCategory.create(obj, { transaction }); });
