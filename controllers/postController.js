@@ -35,9 +35,15 @@ const readOne = async (req, res) => {
 const updateOne = async (req, res) => {
   try {
     const userInput = req.body;
-    const blogPost = await service.updateOne(userInput); // aguardando implementação
+    const { authorization: token } = req.headers;
+    const { id } = req.params;
+    const { id: userId } = readToken(token);
+    userInput.id = Number(id);
+    userInput.userId = userId;
+    const blogPost = await service.updateOne(userInput);
     return res.status(200).json(blogPost);
   } catch (err) {
+    console.error('Update Error', err.message);
     return res.status(err.status).send({ message: err.message });
   }
 };

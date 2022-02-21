@@ -5,12 +5,17 @@ const {
   BlogPosts: BlogPost,
   PostsCategories: PostCategory,
 } = require('../models');
-const { postValidate } = require('../validations');
+const {
+  postValidate,
+  createPostValidate,
+  updatePostValidate,
+} = require('../validations');
 
 const newError = (error) => (error);
 
 const createOne = async (userInput, userId) => {
   postValidate(userInput);
+  createPostValidate(userInput);
   const transaction = await sequelize.transaction();
   const { categoryIds } = userInput;
   const categories = await Category.findAll({ attributes: ['id'] });
@@ -66,8 +71,19 @@ const readOne = async (id) => {
 };
 
 const updateOne = async (input) => {
-  const { title, content } = input;
-  return { title, content };
+  postValidate(input);
+  updatePostValidate(input);
+  const { id, title, content } = input;
+  await BlogPost.update({ title, content },
+    { where: { id } });
+  const newPost = await BlogPost.findByPk(id,
+    {
+      include: [
+        { model: Category, as: 'categories', through: { model: PostCategory, attributes: [] } },
+      ],
+      attributes: { exclude: ['id', 'published', 'updated'] },
+  });
+  return newPost;
 };
 
 const deleteOne = async (id) => {
