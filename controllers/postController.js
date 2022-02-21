@@ -18,22 +18,25 @@ const readAll = async (_req, res) => {
     const allPosts = await service.readAll();
     return res.status(200).json(allPosts);
   } catch (err) {
+    console.log(err.message);
     return res.status(err.status).send({ message: err.message });
   }
 };
 
-const readOne = async (_req, res) => {
+const readOne = async (req, res) => {
   try {
-    const blogPost = await service.readOne(); // aguardando implementação
+    const { id } = req.params;
+    const blogPost = await service.readOne(id);
     return res.status(200).json(blogPost);
   } catch (err) {
     return res.status(err.status).send({ message: err.message });
   }
 };
 
-const updateOne = async (_req, res) => {
+const updateOne = async (req, res) => {
   try {
-    const blogPost = await service.updateOne(); // aguardando implementação
+    const userInput = req.body;
+    const blogPost = await service.updateOne(userInput); // aguardando implementação
     return res.status(200).json(blogPost);
   } catch (err) {
     return res.status(err.status).send({ message: err.message });
