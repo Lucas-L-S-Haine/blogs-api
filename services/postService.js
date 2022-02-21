@@ -100,7 +100,10 @@ const deleteOne = async (input) => {
   await BlogPost.destroy({ where: { id } });
 };
 
-const readMany = async () => {};
+const readMany = async (query) => {
+  console.log(query);
+  return query;
+};
 
 module.exports = {
   createOne,
