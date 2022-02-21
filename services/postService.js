@@ -9,6 +9,7 @@ const {
   postValidate,
   createPostValidate,
   updatePostValidate,
+  deletePostValidate,
 } = require('../validations');
 
 const newError = (error) => (error);
@@ -86,7 +87,16 @@ const updateOne = async (input) => {
   return newPost;
 };
 
-const deleteOne = async (id) => {
+const deleteOne = async (input) => {
+  const { id } = input;
+  const post = await BlogPost.findByPk(id);
+  if (!post) {
+    const error = new Error();
+    error.status = 404;
+    error.message = 'Post does not exist';
+    throw error;
+  }
+  deletePostValidate(input);
   await BlogPost.destroy({ where: { id } });
 };
 

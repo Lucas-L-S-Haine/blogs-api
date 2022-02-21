@@ -4,6 +4,7 @@ const categoryValidate = require('./categoryValidate');
 const postValidate = require('./postValidate');
 const createPostValidate = require('./createPostValidate');
 const updatePostValidate = require('./updatePostValidate');
+const deletePostValidate = require('./deletePostValidate');
 
 module.exports = {
   userValidate,
@@ -12,4 +13,5 @@ module.exports = {
   postValidate,
   createPostValidate,
   updatePostValidate,
+  deletePostValidate,
 };

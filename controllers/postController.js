@@ -43,15 +43,19 @@ const updateOne = async (req, res) => {
     const blogPost = await service.updateOne(userInput);
     return res.status(200).json(blogPost);
   } catch (err) {
-    console.error('Update Error', err.message);
     return res.status(err.status).send({ message: err.message });
   }
 };
 
 const deleteOne = async (req, res) => {
   try {
+    const userInput = {};
+    const { authorization: token } = req.headers;
     const { id } = req.params;
-    await service.deleteOne(id); // aguardando implementação
+    const { id: userId } = readToken(token);
+    userInput.id = Number(id);
+    userInput.userId = userId;
+    await service.deleteOne(userInput);
     return res.status(204).send();
   } catch (err) {
     return res.status(err.status).send({ message: err.message });
