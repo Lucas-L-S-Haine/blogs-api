@@ -101,8 +101,10 @@ const deleteOne = async (input) => {
 };
 
 const readMany = async (query) => {
-  console.log(query);
-  return query;
+  const postList = await BlogPost.findAll({
+    where: { title: query },
+  });
+  return postList;
 };
 
 module.exports = {
