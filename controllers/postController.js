@@ -18,15 +18,10 @@ const readAll = (_req, res, next) => service
   .then((posts) => res.status(200).json(posts))
   .catch(next);
 
-const readOne = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const blogPost = await service.readOne(id);
-    return res.status(200).json(blogPost);
-  } catch (err) {
-    return res.status(err.status).send({ message: err.message });
-  }
-};
+const readOne = (req, res, next) => service
+  .readOne(req.params.id)
+  .then((post) => res.status(200).json(post))
+  .catch(next);
 
 const updateOne = async (req, res) => {
   try {
