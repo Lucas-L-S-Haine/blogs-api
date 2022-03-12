@@ -74,8 +74,7 @@ const updateOne = async (input) => {
   postValidate(input);
   updatePostValidate(input);
   const { id, title, content } = input;
-  await BlogPost.update({ title, content },
-    { where: { id } });
+  await BlogPost.update({ title, content }, { where: { id } });
   const newPost = await BlogPost.findByPk(id,
     {
       include: [
