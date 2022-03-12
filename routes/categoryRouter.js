@@ -4,9 +4,11 @@ const { validateToken } = require('../auth');
 
 const categoryRouter = express.Router();
 
+categoryRouter.use(validateToken);
+
 categoryRouter
   .route('/')
-  .get(validateToken, readAll)
-  .post(validateToken, createOne);
+  .get(readAll)
+  .post(createOne);
 
 module.exports = categoryRouter;

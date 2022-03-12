@@ -11,12 +11,14 @@ userRouter
   .get(validateToken, readAll)
   .post(createOne);
 
+userRouter.use(validateToken);
+
 userRouter
   .route('/:id')
-  .get(validateToken, readOne);
+  .get(readOne);
 
 userRouter
   .route('/me')
-  .delete(validateToken, deleteOne);
+  .delete(deleteOne);
 
 module.exports = userRouter;

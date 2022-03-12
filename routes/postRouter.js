@@ -7,19 +7,21 @@ const { validateToken } = require('../auth');
 
 const postRouter = express.Router();
 
+postRouter.use(validateToken);
+
 postRouter
   .route('/')
-  .get(validateToken, readAll)
-  .post(validateToken, createOne);
+  .get(readAll)
+  .post(createOne);
 
 postRouter
   .route('/search')
-  .get(validateToken, readMany);
+  .get(readMany);
 
 postRouter
   .route('/:id')
-  .get(validateToken, readOne)
-  .put(validateToken, updateOne)
-  .delete(validateToken, deleteOne);
+  .get(readOne)
+  .put(updateOne)
+  .delete(deleteOne);
 
 module.exports = postRouter;
