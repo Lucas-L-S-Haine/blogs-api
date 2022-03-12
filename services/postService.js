@@ -1,3 +1,4 @@
+const { Op } = require('sequelize');
 const {
   sequelize,
   User,
@@ -100,7 +101,12 @@ const deleteOne = async (input) => {
 
 const readMany = async (query) => {
   const postList = await BlogPost.findAll({
-    where: { title: query },
+    where: {
+      [Op.or]: [
+        { title: { [Op.like]: `%${query}%` } },
+        { content: { [Op.like]: `%${query}%` } },
+      ],
+    },
   });
   return postList;
 };
