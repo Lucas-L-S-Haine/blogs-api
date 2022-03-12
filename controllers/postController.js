@@ -63,6 +63,11 @@ const readMany = async (req, res) => {
   }
 };
 
+// const readMany = (req, res, next) => service
+//   .readMany(req.query.q)
+//   .then((posts) => res.status(200).json(posts))
+//   .catch(next);
+
 module.exports = {
   createOne,
   readAll,
