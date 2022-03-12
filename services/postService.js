@@ -25,10 +25,9 @@ const createOne = async (userInput, userId) => {
   if (invalidIds.length > 0) throw newError({ status: 400, message: '"categoryIds" not found' });
   const post = { ...userInput, userId };
   const newPost = await BlogPost.create(post, { transaction });
-  // const { postId } = newPost;
-//  categoryIds
-//    .map((categoryId) => ({ postId, categoryId }))
-//    .then(PostCategory.create);
+  const { id: postId } = newPost.dataValues;
+  const postsCategories = categoryIds.map((categoryId) => ({ postId, categoryId }));
+  await PostCategory.bulkCreate(postsCategories, { transaction });
   await transaction.commit();
   return newPost;
 };
