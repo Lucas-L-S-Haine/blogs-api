@@ -2,7 +2,7 @@ const { User } = require('../models');
 const { newToken } = require('../auth');
 const { loginValidate } = require('../validations');
 
-const createOne = async (loginData) => {
+const login = async (loginData) => {
   loginValidate(loginData);
   const user = await User.findAll({ where: { email: loginData.email } });
   if (user.length === 0) {
@@ -16,4 +16,4 @@ const createOne = async (loginData) => {
   return token;
 };
 
-module.exports = { createOne };
+module.exports = { login };
