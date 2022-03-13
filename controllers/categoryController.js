@@ -1,22 +1,13 @@
 const service = require('../services/categoryService');
 
-const readAll = async (req, res) => {
-  try {
-    const categories = await service.readAll();
-    return res.status(200).json(categories);
-  } catch (err) {
-    return res.status(err.status).send({ message: err.message });
-  }
-};
+const readAll = (req, res, next) => service
+  .readAll()
+  .then((categories) => res.status(200).json(categories))
+  .catch(next);
 
-const createOne = async (req, res) => {
-  try {
-    const category = req.body;
-    const result = await service.createOne(category);
-    return res.status(201).json(result);
-  } catch (err) {
-    return res.status(err.status).send({ message: err.message });
-  }
-};
+const createOne = (req, res, next) => service
+  .createOne(req.body)
+  .then((result) => res.status(201).json(result))
+  .catch(next);
 
 module.exports = { readAll, createOne };
