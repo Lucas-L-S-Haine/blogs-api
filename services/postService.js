@@ -107,6 +107,10 @@ const readMany = async (query) => {
         { content: { [Op.like]: `%${query}%` } },
       ],
     },
+    include: [
+      { model: User, as: 'user', attributes: { exclude: ['password'] } },
+      { model: Category, as: 'categories', through: { model: PostCategory, attributes: [] } },
+    ],
   });
   return postList;
 };
