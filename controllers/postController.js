@@ -53,20 +53,10 @@ const deleteOne = async (req, res) => {
   }
 };
 
-const readMany = async (req, res) => {
-  try {
-    const { q: query } = req.query;
-    const postList = await service.readMany(query);
-    return res.status(200).json(postList);
-  } catch (err) {
-    return res.status(err.status).send({ message: err.message });
-  }
-};
-
-// const readMany = (req, res, next) => service
-//   .readMany(req.query.q)
-//   .then((posts) => res.status(200).json(posts))
-//   .catch(next);
+const readMany = (req, res, next) => service
+  .readMany(req.query.q)
+  .then((posts) => res.status(200).json(posts))
+  .catch(next);
 
 module.exports = {
   createOne,
