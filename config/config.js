@@ -3,7 +3,7 @@ require('dotenv/config');
 const {
   MYSQL_USER: username,
   MYSQL_PASSWORD: password,
-  HOSTNAME: host,
+  MYSQL_HOST: host,
 } = process.env;
 
 module.exports = {
