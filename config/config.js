@@ -4,6 +4,7 @@ const {
   MYSQL_USER: username,
   MYSQL_PASSWORD: password,
   MYSQL_HOST: host,
+  MYSQL_PORT: port,
 } = process.env;
 
 module.exports = {
@@ -11,6 +12,7 @@ module.exports = {
     username,
     password,
     host,
+    port,
     database: 'blogs_api',
     dialect: 'mysql',
   },
@@ -18,6 +20,7 @@ module.exports = {
     username,
     password,
     host,
+    port,
     database: 'blogs_api',
     dialect: 'mysql',
   },
@@ -25,6 +28,7 @@ module.exports = {
     username,
     password,
     host,
+    port,
     database: 'blogs_api',
     dialect: 'mysql',
   },
