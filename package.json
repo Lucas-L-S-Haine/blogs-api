@@ -28,7 +28,7 @@
     "frisby": "2.1.2",
     "jest": "26.0.1",
     "minimist": "^1.2.6",
-    "moment": "^2.29.2",
+    "moment": "^2.29.4",
     "sequelize-cli": "6.2.0",
     "supertest": "4.0.2"
   }
