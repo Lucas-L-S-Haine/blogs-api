@@ -19,4 +19,5 @@ app.get('/', (request, response) => {
 app.use(errorMiddleware);
 app.use(notFoundMiddleware);
 
-app.listen(PORT, () => console.log(`Application online on port \x1b[03;94m${PORT}\x1b[00m!`));
+app.listen(PORT, () =>
+  console.log(`Application online on port \x1b[03;94m${PORT}\x1b[00m!`));
