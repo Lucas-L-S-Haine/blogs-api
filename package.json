@@ -2,6 +2,7 @@
   "name": "blogs-api",
   "version": "1.1.0",
   "private": true,
+  "main": "./src/index.js",
   "scripts": {
     "prestart": "npx sequelize-cli db:create && npx sequelize-cli db:migrate $",
     "start": "node .",
@@ -9,7 +10,7 @@
     "seed": "npx sequelize-cli db:seed:all $",
     "test": "jest --runInBand",
     "test-coverage": "jest --runInBand --coverage",
-    "debug": "nodemon index.js",
+    "debug": "nodemon",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json ."
   },
   "dependencies": {
