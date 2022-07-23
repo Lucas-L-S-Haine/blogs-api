@@ -4,7 +4,10 @@ const { loginValidate } = require('../validations');
 
 const login = async (loginData) => {
   loginValidate(loginData);
-  const user = await User.findAll({ where: { email: loginData.email } });
+  const user = await User.findAll({ where: {
+    email: loginData.email,
+    password: loginData.password,
+  } });
   if (user.length === 0) {
     const error = new Error();
     error.status = 400;
