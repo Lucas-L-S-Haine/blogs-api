@@ -1,3 +1,4 @@
+const { hashSync: hash } = require('bcryptjs');
 const { User } = require('../models');
 const { newToken } = require('../auth');
 const { userValidate } = require('../validations');
@@ -21,6 +22,7 @@ const readAll = async () => {
 
 const createOne = async (user) => {
   userValidate(user);
+  const userData = { ...user, password: hash(user.password, 8) };
   if (await User.findOne({ where: { email: user.email } })) {
     const error = new Error();
     error.status = 409;
@@ -28,7 +30,7 @@ const createOne = async (user) => {
     throw error;
   }
   const token = newToken(user);
-  await User.create(user);
+  await User.create(userData);
   return token;
 };
 
