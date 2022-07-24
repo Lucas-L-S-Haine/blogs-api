@@ -4,7 +4,8 @@
   "private": true,
   "main": "./src/index.js",
   "scripts": {
-    "prestart": "npx sequelize-cli db:create && npx sequelize-cli db:migrate $",
+    "postinstall": "node tasks/createDatabase.js",
+    "prestart": "npx sequelize-cli db:migrate $",
     "start": "node .",
     "drop": "npx sequelize-cli db:drop $",
     "seed": "npx sequelize-cli db:seed:all $",
