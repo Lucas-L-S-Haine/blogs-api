@@ -12,7 +12,9 @@
     "pretest": "NODE_ENV=test node . &> /dev/null &",
     "test": "jest --runInBand",
     "posttest": "killall node",
-    "test-coverage": "jest --runInBand --coverage",
+    "pretest-coverage": "NODE_ENV=test node . &> /dev/null &",
+    "test-coverage": "jest --coverage -ic jest-coverage.js",
+    "posttest-coverage": "killall node",
     "debug": "nodemon",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json ."
   },
