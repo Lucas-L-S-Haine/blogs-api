@@ -13,6 +13,13 @@
     "debug": "nodemon",
     "lint": "eslint --no-inline-config --no-error-on-unmatched-pattern -c .eslintrc.json ."
   },
+  "nodemonConfig": {
+    "ignore": [
+      "tests/*",
+      "docs/*"
+    ],
+    "watch": "src/"
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "dotenv": "8.2.0",
