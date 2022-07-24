@@ -10,7 +10,7 @@
     "drop": "npx sequelize-cli db:drop $",
     "seed": "npx sequelize-cli db:seed:all $",
     "pretest": "NODE_ENV=test node . &> /dev/null &",
-    "test": "jest --runInBand --testFailureExitCode=0",
+    "test": "jest --runInBand",
     "posttest": "killall node",
     "test-coverage": "jest --runInBand --coverage",
     "debug": "nodemon",
@@ -22,6 +22,9 @@
       "docs/*"
     ],
     "watch": "src/"
+  },
+  "jest": {
+    "testFailureExitCode": 0
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
