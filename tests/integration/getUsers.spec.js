@@ -31,4 +31,15 @@ describe('Test the GET /user endpoint', () => {
       image: 'https://sportbuzz.uol.com.br/media/_versions/gettyimages-52491565_widelg.jpg',
     });
   });
+
+  it('doesn’t return users list without authorization token', async () => {
+    try {
+      const { data, status } = await axios.get(`${baseUrl}/user`);
+      throw { response: { data, status } };
+    } catch(error) {
+      const { data, status } = error.response;
+      expect(status).toBe(401);
+      expect(data).toEqual({ message: 'Token not found' });
+    }
+  });
 });
