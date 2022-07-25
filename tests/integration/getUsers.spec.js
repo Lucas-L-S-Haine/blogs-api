@@ -9,7 +9,7 @@ const baseUrl = `http://${host}:${port}`;
 describe('Test the GET /user endpoint', () => {
   beforeAll(login);
 
-  it('should correctly return data on registered users', async () => {
+  it('return data on registered users', async () => {
     const { authorization } = process.env;
     const config = {
       timeout: 1000,
