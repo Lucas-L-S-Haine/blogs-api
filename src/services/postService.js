@@ -15,16 +15,16 @@ const {
 
 const newError = (error) => (error);
 
-const createOne = async (userInput, userId) => {
-  postValidate(userInput);
-  createPostValidate(userInput);
+const createOne = async (input, userId) => {
+  postValidate(input);
+  createPostValidate(input);
   const transaction = await sequelize.transaction();
-  const { categoryIds } = userInput;
+  const { categoryIds } = input;
   const categories = await Category.findAll({ attributes: ['id'] });
   const categoryList = categories.map((category) => category.dataValues.id);
   const invalidIds = categoryIds.filter((id) => categoryList.indexOf(id) === -1);
   if (invalidIds.length > 0) throw newError({ status: 400, message: '"categoryIds" not found' });
-  const post = { ...userInput, userId };
+  const post = { ...input, userId };
   const newPost = await BlogPost.create(post, { transaction });
   const { id: postId } = newPost.dataValues;
   const postsCategories = categoryIds.map((categoryId) => ({ postId, categoryId }));
