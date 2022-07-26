@@ -74,9 +74,8 @@ const readOne = async (id) => {
 
 const updateOne = async (input) => {
   postValidate(input);
-  const { id, title, content, email } = input;
-  const originalPoster = await User.findOne({ where: { email }, attributes: ['id'] });
-  const { id: originalPosterId } = originalPoster;
+  const { id, title, content } = input;
+  const { userId: originalPosterId } = await BlogPost.findByPk(id);
   updatePostValidate({ ...input, id: originalPosterId });
   await BlogPost.update({ title, content }, { where: { id } });
   const newPost = await BlogPost.findByPk(id,
@@ -90,9 +89,7 @@ const updateOne = async (input) => {
 };
 
 const deleteOne = async (input) => {
-  const { id, email } = input;
-  const originalPoster = await User.findOne({ where: { email }, attributes: ['id'] });
-  const { id: originalPosterId } = originalPoster;
+  const { id } = input;
   const post = await BlogPost.findByPk(id);
   if (!post) {
     const error = new Error();
@@ -100,6 +97,7 @@ const deleteOne = async (input) => {
     error.message = 'Post does not exist';
     throw error;
   }
+  const { userId: originalPosterId } = post;
   deletePostValidate({ ...input, id: originalPosterId });
   await BlogPost.destroy({ where: { id } });
 };
