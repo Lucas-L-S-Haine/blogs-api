@@ -30,8 +30,9 @@ const createOne = async (user) => {
     error.message = 'User already registered';
     throw error;
   }
-  const token = newToken(user);
   await User.create(userData);
+  const { id } = await User.findOne({ where: { email: user.email } });
+  const token = newToken({ id, ...user });
   return token;
 };
 
