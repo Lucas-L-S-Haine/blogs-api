@@ -26,7 +26,8 @@
     "watch": "src/"
   },
   "jest": {
-    "testFailureExitCode": 0
+    "testFailureExitCode": 0,
+    "verbose": true
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
