@@ -49,9 +49,10 @@ const deleteOne = async (req, res, next) => {
     const userInput = {};
     const { authorization: token } = req.headers;
     const { id } = req.params;
-    const { id: userId } = readToken(token);
+    const { id: userId, email } = readToken(token);
     userInput.id = Number(id);
     userInput.userId = userId;
+    userInput.email = email;
     await service.deleteOne(userInput);
     return res.status(204).send();
   } catch (err) {

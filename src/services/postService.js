@@ -90,7 +90,9 @@ const updateOne = async (input) => {
 };
 
 const deleteOne = async (input) => {
-  const { id } = input;
+  const { id, email } = input;
+  const originalPoster = await User.findOne({ where: { email }, attributes: ['id'] });
+  const { id: originalPosterId } = originalPoster;
   const post = await BlogPost.findByPk(id);
   if (!post) {
     const error = new Error();
@@ -98,7 +100,7 @@ const deleteOne = async (input) => {
     error.message = 'Post does not exist';
     throw error;
   }
-  deletePostValidate(input);
+  deletePostValidate({ ...input, id: originalPosterId });
   await BlogPost.destroy({ where: { id } });
 };
 
