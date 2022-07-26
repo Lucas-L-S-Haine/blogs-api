@@ -74,8 +74,10 @@ const readOne = async (id) => {
 
 const updateOne = async (input) => {
   postValidate(input);
-  updatePostValidate(input);
-  const { id, title, content } = input;
+  const { id, title, content, email } = input;
+  const originalPoster = await User.findOne({ where: { email }, attributes: ['id'] });
+  const { id: originalPosterId } = originalPoster;
+  updatePostValidate({ ...input, id: originalPosterId });
   await BlogPost.update({ title, content }, { where: { id } });
   const newPost = await BlogPost.findByPk(id,
     {

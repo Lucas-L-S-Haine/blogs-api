@@ -33,9 +33,10 @@ const updateOne = async (req, res, next) => {
     const userInput = req.body;
     const { authorization: token } = req.headers;
     const { id } = req.params;
-    const { id: userId } = readToken(token);
+    const { id: userId, email } = readToken(token);
     userInput.id = Number(id);
     userInput.userId = userId;
+    userInput.email = email;
     const blogPost = await service.updateOne(userInput);
     return res.status(200).json(blogPost);
   } catch (err) {
