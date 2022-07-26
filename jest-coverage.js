@@ -1,7 +1,7 @@
 module.exports = {
   testFailureExitCode: 0,
   silent: true,
-  collectCoverageFrom: ['src/**/*.js'],
+  collectCoverageFrom: ['src/**/*.js', '!src/*/**/index.js'],
   coveragePathIgnorePatterns: [
     'src/models/',
     'src/migrations/',
