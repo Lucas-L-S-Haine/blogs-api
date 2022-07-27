@@ -1,6 +1,6 @@
 const { resolve } = require('path');
 const validateLogin = require(
-  resolve(__dirname, '../..', 'src/validations/loginValidate.js'));
+  resolve(__dirname, '../../..', 'src/validations/loginValidate.js'));
 
 describe('Test login validation', () => {
   it('doesn’t allow email to be empty', () => {

@@ -1,6 +1,6 @@
 const { resolve } = require('path');
 const validateCategory = require(
-  resolve(__dirname, '../..', 'src/validations/categoryValidate.js'));
+  resolve(__dirname, '../../..', 'src/validations/categoryValidate.js'));
 
 describe('Test category validation', () => {
   it('doesn’t allow categories without name', () => {

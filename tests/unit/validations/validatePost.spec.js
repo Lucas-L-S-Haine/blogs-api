@@ -1,12 +1,12 @@
 const { resolve } = require('path');
 const validatePost = require(
-  resolve(__dirname, '../..', 'src/validations/postValidate.js'));
+  resolve(__dirname, '../../..', 'src/validations/postValidate.js'));
 const validateCreatePost = require(
-  resolve(__dirname, '../..', 'src/validations/createPostValidate.js'));
+  resolve(__dirname, '../../..', 'src/validations/createPostValidate.js'));
 const validateUpdatePost = require(
-  resolve(__dirname, '../..', 'src/validations/updatePostValidate.js'));
+  resolve(__dirname, '../../..', 'src/validations/updatePostValidate.js'));
 const validateDeletePost = require(
-  resolve(__dirname, '../..', 'src/validations/deletePostValidate.js'));
+  resolve(__dirname, '../../..', 'src/validations/deletePostValidate.js'));
 
 describe('Test post validation', () => {
   it('doesn’t allow posts without title', () => {

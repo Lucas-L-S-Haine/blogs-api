@@ -1,6 +1,6 @@
 const { resolve } = require('path');
 const validateUser = require(
-  resolve(__dirname, '../..', 'src/validations/userValidate.js'));
+  resolve(__dirname, '../../..', 'src/validations/userValidate.js'));
 
 describe('Test user validation', () => {
   it('doesn’t allow less than 8 characters for displayName', () => {
