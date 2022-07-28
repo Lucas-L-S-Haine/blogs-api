@@ -1,4 +1,4 @@
-const regex = require('../regex');
+const regex = require('./regex');
 
 const isValidName = (displayName) => regex.displayName.test(displayName);
 
