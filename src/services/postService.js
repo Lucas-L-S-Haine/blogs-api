@@ -12,8 +12,7 @@ const {
   updatePostValidate,
   deletePostValidate,
 } = require('../validations');
-
-const newError = (error) => (error);
+const HTTPError = require('../utils/httpError.js');
 
 const createOne = async (input, userId) => {
   postValidate(input);
@@ -23,7 +22,7 @@ const createOne = async (input, userId) => {
   const categories = await Category.findAll({ attributes: ['id'] });
   const categoryList = categories.map((category) => category.dataValues.id);
   const invalidIds = categoryIds.filter((id) => categoryList.indexOf(id) === -1);
-  if (invalidIds.length > 0) throw newError({ status: 400, message: '"categoryIds" not found' });
+  if (invalidIds.length > 0) throw new HTTPError(400, '"categoryIds" not found');
   const post = { ...input, userId };
   const newPost = await BlogPost.create(post, { transaction });
   const { id: postId } = newPost.dataValues;
@@ -63,12 +62,7 @@ const readOne = async (id) => {
           { model: Category, as: 'categories', through: { model: PostCategory, attributes: [] } },
         ],
   });
-  if (!post) {
-    const error = new Error();
-    error.status = 404;
-    error.message = 'Post does not exist';
-    throw error;
-  }
+  if (!post) throw new HTTPError(404, 'Post does not exist');
   return post;
 };
 
@@ -91,12 +85,7 @@ const updateOne = async (input) => {
 const deleteOne = async (input) => {
   const { id } = input;
   const post = await BlogPost.findByPk(id);
-  if (!post) {
-    const error = new Error();
-    error.status = 404;
-    error.message = 'Post does not exist';
-    throw error;
-  }
+  if (!post) throw new HTTPError(404, 'Post does not exist');
   const { userId: originalPosterId } = post;
   deletePostValidate({ ...input, id: originalPosterId });
   await BlogPost.destroy({ where: { id } });
