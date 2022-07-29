@@ -1,19 +1,11 @@
+const HTTPError = require('../utils/httpError');
+
 const validateTitle = (post) => {
-  const error = new Error();
-  if (!post.title) {
-    error.status = 400;
-    error.message = '"title" is required';
-    throw error;
-  }
+  if (!post.title) throw new HTTPError(400, '"title" is required');
 };
 
 const validateContent = (post) => {
-  const error = new Error();
-  if (!post.content) {
-    error.status = 400;
-    error.message = '"content" is required';
-    throw error;
-  }
+  if (!post.content) throw new HTTPError(400, '"content" is required');
 };
 
 module.exports = (post) => {

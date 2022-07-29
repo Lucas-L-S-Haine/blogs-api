@@ -1,8 +1,5 @@
+const HTTPError = require('../utils/httpError');
+
 module.exports = (post) => {
-  const error = new Error();
-  if (!post.categoryIds) {
-    error.status = 400;
-    error.message = '"categoryIds" is required';
-    throw error;
-  }
+  if (!post.categoryIds) throw new HTTPError(400, '"categoryIds" is required');
 };

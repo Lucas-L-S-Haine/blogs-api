@@ -1,41 +1,29 @@
 const {
   isValidName, isValidEmail, isValidPassword,
 } = require('../utils/functions');
+const HTTPError = require('../utils/httpError');
 
 const validateName = (user) => {
-  const error = new Error();
   if (!isValidName(user.displayName)) {
-    error.status = 400;
-    error.message = '"displayName" length must be at least 8 characters long';
-    throw error;
+    throw new HTTPError(400, '"displayName" length must be at least 8 characters long');
   }
 };
 
 const validateEmail = (user) => {
-  const error = new Error();
   if (!user.email) {
-    error.status = 400;
-    error.message = '"email" is required';
-    throw error;
+    throw new HTTPError(400, '"email" is required');
   }
   if (!isValidEmail(user.email)) {
-    error.status = 400;
-    error.message = '"email" must be a valid email';
-    throw error;
+    throw new HTTPError(400, '"email" must be a valid email');
   }
 };
 
 const validatePassword = (user) => {
-  const error = new Error();
   if (!user.password) {
-    error.status = 400;
-    error.message = '"password" is required';
-    throw error;
+    throw new HTTPError(400, '"password" is required');
   }
   if (!isValidPassword(user.password)) {
-    error.status = 400;
-    error.message = '"password" length must be 6 characters long';
-    throw error;
+    throw new HTTPError(400, '"password" length must be 6 characters long');
   }
 };
 

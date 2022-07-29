@@ -1,10 +1,7 @@
+const HTTPError = require('../utils/httpError');
+
 const validateName = (category) => {
-  const error = new Error();
-  if (!category.name) {
-    error.status = 400;
-    error.message = '"name" is required';
-    throw error;
-  }
+  if (!category.name) throw new HTTPError(400, '"name" is required');
 };
 
 module.exports = (category) => {

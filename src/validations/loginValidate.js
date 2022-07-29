@@ -1,30 +1,21 @@
 const { isEmpty } = require('../utils/functions');
+const HTTPError = require('../utils/httpError');
 
 const validateEmail = (loginData) => {
-  const error = new Error();
   if (isEmpty(loginData.email)) {
-    error.status = 400;
-    error.message = '"email" is not allowed to be empty';
-    throw error;
+    throw new HTTPError(400, '"email" is not allowed to be empty');
   }
   if (!loginData.email) {
-    error.status = 400;
-    error.message = '"email" is required';
-    throw error;
+    throw new HTTPError(400, '"email" is required');
   }
 };
 
 const validatePassword = (loginData) => {
-  const error = new Error();
   if (isEmpty(loginData.password)) {
-    error.status = 400;
-    error.message = '"password" is not allowed to be empty';
-    throw error;
+    throw new HTTPError(400, '"password" is not allowed to be empty');
   }
   if (!loginData.password) {
-    error.status = 400;
-    error.message = '"password" is required';
-    throw error;
+    throw new HTTPError(400, '"password" is required');
   }
 };
 
