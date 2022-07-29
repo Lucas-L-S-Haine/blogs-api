@@ -20,12 +20,11 @@ const createOne = async (user) => {
   userValidate(user);
   const password = await hash(user.password, 8);
   const userData = { ...user, password };
-  if (await User.findOne({ where: { email: user.email } })) {
-    const error = new Error();
-    error.status = 409;
-    error.message = 'User already registered';
-    throw error;
-  }
+  let foundUser;
+  await User.findOne({ where: { email: user.email } })
+    .then((dbUser) => { foundUser = dbUser.get(); })
+    .catch(() => { foundUser = null; });
+  if (foundUser) throw new HTTPError(409, 'User already registered');
   await User.create(userData);
   const { id } = await User.findOne({ where: { email: user.email } });
   delete userData.password;
