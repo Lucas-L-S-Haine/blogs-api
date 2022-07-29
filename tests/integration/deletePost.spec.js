@@ -43,13 +43,10 @@ describe('Test the DELETE /post/:id endpoint', () => {
       timeout: 1000,
       headers: { authorization },
     };
-    try {
-      const { data, status } = await axios.delete(`${baseUrl}/post/2`, config);
-      throw { response: { data, status } };
-    } catch(error) {
-      const { data, status } = error.response;
-      expect(status).toBe(401);
-      expect(data.message).toBe('Unauthorized user');
-    }
+    const { data, status } = await axios.delete(`${baseUrl}/post/2`, config)
+      .catch(({ response }) => ({ data: response.data, status: response.status }));
+
+    expect(status).toBe(401);
+    expect(data.message).toBe('Unauthorized user');
   });
 });

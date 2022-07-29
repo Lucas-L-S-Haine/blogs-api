@@ -56,13 +56,10 @@ describe('Test the PUT /post/:id endpoint', () => {
       title: 'Corredor do Ano',
       content: 'Schumacher > Hamilton',
     }
-    try {
-      const { data, status } = await axios.put(`${baseUrl}/post/1`, newPost, config);
-      throw { response: { data, status } };
-    } catch(error) {
-      const { data, status } = error.response;
-      expect(status).toBe(401);
-      expect(data.message).toBe('Unauthorized user');
-    }
+    const { data, status } = await axios.put(`${baseUrl}/post/1`, newPost, config)
+      .catch(({ response }) => ({ data: response.data, status: response.status }));
+
+    expect(status).toBe(401);
+    expect(data.message).toBe('Unauthorized user');
   });
 });

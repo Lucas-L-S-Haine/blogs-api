@@ -33,13 +33,9 @@ describe('Test the GET /user endpoint', () => {
   });
 
   it('doesn’t return users list without authorization token', async () => {
-    try {
-      const { data, status } = await axios.get(`${baseUrl}/user`);
-      throw { response: { data, status } };
-    } catch(error) {
-      const { data, status } = error.response;
-      expect(status).toBe(401);
-      expect(data).toEqual({ message: 'Token not found' });
-    }
+    const { data, status } = await axios.get(`${baseUrl}/user`)
+      .catch(({ response }) => ({ data: response.data, status: response.status }));
+    expect(status).toBe(401);
+    expect(data).toEqual({ message: 'Token not found' });
   });
 });
