@@ -3,9 +3,12 @@ require('dotenv/config');
 const {
   MYSQL_USER: username,
   MYSQL_PASSWORD: password,
-  MYSQL_HOST: host,
-  MYSQL_PORT: port,
+  MYSQL_HOST,
+  MYSQL_PORT,
 } = process.env;
+
+const host = MYSQL_HOST || '127.0.0.1';
+const port = MYSQL_PORT || '3306';
 
 module.exports = {
   development: {
