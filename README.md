@@ -26,8 +26,32 @@ Then install the dependencies:
 ```sh
 npm install
 ```
+After that, create a `.env` file and assign values for the environment variables
+present in `.env.template`. It is necessary to provide `MYSQL_USER` and
+`MYSQL_PASSWORD` to access the database, and a secret keyword to `JWT_SECRET`.
+
+Once you have completed the previous steps, you can create the database, along
+with all the tables using the command:
+```sh
+npm run create
+```
 Finally, run the application:
 ```sh
 npm start
 ```
 Now you can make requests to the API through the URL `localhost:3000`.
+
+## Testing Project
+
+If you want to run the automated tests, you can populate the test database with:
+```sh
+npm run seed
+```
+Then run the automated tests with:
+```sh
+npm test
+```
+To get the test coverage:
+```sh
+npm run test-coverage
+```
