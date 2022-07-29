@@ -32,7 +32,8 @@ const createOne = async (user) => {
   }
   await User.create(userData);
   const { id } = await User.findOne({ where: { email: user.email } });
-  const token = newToken({ id, ...user });
+  delete userData.password;
+  const token = newToken({ id, ...userData });
   return token;
 };
 
