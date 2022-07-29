@@ -12,6 +12,8 @@ The complete list of technologies used:
 - Express.js
 - MySQL
 - Sequelize
+- JSON Web Token
+- bcrypt.js
 
 ## Run Project
 
