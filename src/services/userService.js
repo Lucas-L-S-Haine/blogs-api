@@ -2,15 +2,11 @@ const { hash } = require('bcryptjs');
 const { User } = require('../models');
 const { newToken } = require('../auth');
 const { userValidate } = require('../validations');
+const HTTPError = require('../utils/httpError.js');
 
 const readOne = async (id) => {
   const user = await User.findByPk(id, { attributes: { exclude: ['password'] } });
-  if (!user) {
-    const error = new Error();
-    error.status = 404;
-    error.message = 'User does not exist';
-    throw error;
-  }
+  if (!user) throw new HTTPError(404, 'User does not exist');
   return user;
 };
 
