@@ -29,7 +29,6 @@ describe('Test user services', () => {
     };
 
     const user = await service.readOne(3);
-    console.log(user);
 
     expect(user).toEqual(schumacher);
   })
