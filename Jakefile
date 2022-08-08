@@ -4,9 +4,7 @@ const { Task } = require('jake');
 const jest = require('jest');
 
 desc('list tasks');
-task('default', async () => {
-  await spawn('jake', ['-t'], { stdio: 'inherit' });
-});
+task('default', runDefault);
 
 desc('run tests with jest');
 task('jest', ['startServer'], runTests);
@@ -25,6 +23,10 @@ task('dev', runNodemon);
 
 task('startServer', startServer);
 task('closeServer', closeServer);
+
+async function runDefault() {
+  await spawn('jake', ['-t'], { stdio: 'inherit' });
+}
 
 async function runTests(...parameters) {
   process.env.NODE_ENV = 'test';
