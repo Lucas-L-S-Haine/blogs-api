@@ -1,26 +1,37 @@
-const { resolve } = require('path');
-const fs = require('fs/promises');
+const models = require('../../../src/models');
+jest.mock('../../../src/models');
+const service = require('../../../src/services/userService');
+const HTTPError = require('../../../src/utils/httpError');
 
-const modelsDir = resolve(__dirname, '../../..', 'src/models');
+const { User } = models;
 
-const User = {
-  findByPk: jest.fn(() => {
-    return new Promise((resolve) => {
-      resolve({
-        id: 3,
-        displayName: 'Michael Schumacher',
-        email: 'MichaelSchumacher@gmail.com',
-        image: 'https://sportbuzz.uol.com.br/media/_versions/gettyimages-52491565_widelg.jpg',
-      })
-    })
-  })
-}
-
-const servicesDir = resolve(__dirname, '../../..', 'src/services');
-const service = require(resolve(servicesDir, 'userService'));
+User.findByPk = jest.fn();
 
 describe('Test user services', () => {
-  it('should return Schumacher', async () => {
+  beforeAll(() => {
+    const user = {
+      id: 3,
+      displayName: 'Michael Schumacher',
+      email: 'MichaelSchumacher@gmail.com',
+      image: 'https://sportbuzz.uol.com.br/media/_versions/gettyimages-52491565_widelg.jpg',
+    };
+
+    User.findByPk.mockReturnValue(user);
+  });
+
+  it('should throw error when user id is not in the database', async () => {
+    User.findByPk.mockReturnValueOnce(null);
+
+    try {
+      await service.readOne(3);
+    } catch(error) {
+      expect(error).toHaveProperty('status', 404);
+      expect(error).toHaveProperty('message', 'User does not exist');
+      expect(error).toBeInstanceOf(HTTPError);
+    }
+  });
+
+  it('should return user data when they are found in the database', async () => {
     const schumacher = {
       id: 3,
       displayName: 'Michael Schumacher',
