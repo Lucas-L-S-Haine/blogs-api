@@ -1,3 +1,4 @@
+const { fail } = require('assert/strict');
 const models = require('../../../src/models');
 jest.mock('../../../src/models');
 const service = require('../../../src/services/userService');
@@ -25,10 +26,11 @@ describe('Test user services', () => {
 
       try {
         await service.readOne(8000);
+        fail('function did not throw exception');
       } catch(error) {
-        expect(error).toHaveProperty('status', 404);
         expect(error).toHaveProperty('message', 'User does not exist');
         expect(error).toBeInstanceOf(HTTPError);
+        expect(error).toHaveProperty('status', 404);
       }
     });
 
