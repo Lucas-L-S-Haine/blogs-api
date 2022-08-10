@@ -24,7 +24,7 @@ describe('Test user services', () => {
       User.findByPk.mockReturnValueOnce(null);
 
       try {
-        await service.readOne(3);
+        await service.readOne(8000);
       } catch(error) {
         expect(error).toHaveProperty('status', 404);
         expect(error).toHaveProperty('message', 'User does not exist');
