@@ -19,28 +19,30 @@ describe('Test user services', () => {
     User.findByPk.mockReturnValue(user);
   });
 
-  it('should throw error when user id is not in the database', async () => {
-    User.findByPk.mockReturnValueOnce(null);
+  describe('readOne', () => {
+    it('should throw error when user id is not in the database', async () => {
+      User.findByPk.mockReturnValueOnce(null);
 
-    try {
-      await service.readOne(3);
-    } catch(error) {
-      expect(error).toHaveProperty('status', 404);
-      expect(error).toHaveProperty('message', 'User does not exist');
-      expect(error).toBeInstanceOf(HTTPError);
-    }
+      try {
+        await service.readOne(3);
+      } catch(error) {
+        expect(error).toHaveProperty('status', 404);
+        expect(error).toHaveProperty('message', 'User does not exist');
+        expect(error).toBeInstanceOf(HTTPError);
+      }
+    });
+
+    it('should return user data when they are found in the database', async () => {
+      const schumacher = {
+        id: 3,
+        displayName: 'Michael Schumacher',
+        email: 'MichaelSchumacher@gmail.com',
+        image: 'https://sportbuzz.uol.com.br/media/_versions/gettyimages-52491565_widelg.jpg',
+      };
+
+      const user = await service.readOne(3);
+
+      expect(user).toEqual(schumacher);
+    });
   });
-
-  it('should return user data when they are found in the database', async () => {
-    const schumacher = {
-      id: 3,
-      displayName: 'Michael Schumacher',
-      email: 'MichaelSchumacher@gmail.com',
-      image: 'https://sportbuzz.uol.com.br/media/_versions/gettyimages-52491565_widelg.jpg',
-    };
-
-    const user = await service.readOne(3);
-
-    expect(user).toEqual(schumacher);
-  })
 });
