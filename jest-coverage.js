@@ -8,4 +8,8 @@ module.exports = {
     'src/migrations/',
     'src/seeders/',
   ],
+  testMatch: [
+    '<rootDir>/tests/unit/**/*.spec.js',
+    '<rootDir>/tests/integration/**/*.spec.js',
+  ],
 };
