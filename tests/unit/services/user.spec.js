@@ -137,4 +137,14 @@ describe('Test user services', () => {
       expect(result).toEqual(expect.arrayContaining([hamilton, schumacher]));
     });
   });
+
+  describe('deleteOne', () => {
+    it('should not return anything', async () => {
+      email = 'lewishamilton@gmail.com';
+
+      const result = await service.deleteOne('lewishamilton@gmail.com');
+
+      expect(result).toBeUndefined();
+    });
+  });
 });
