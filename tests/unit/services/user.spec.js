@@ -94,7 +94,7 @@ describe('Test user services', () => {
         email: 'lewishamilton@gmail.com',
         password: '123456',
         image: 'https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg',
-      }
+      };
 
       const token = await service.createOne(hamilton);
       expect(token).toEqual(expect.any(String));
