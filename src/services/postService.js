@@ -57,10 +57,10 @@ const readAll = async () => {
 const readOne = async (id) => {
   const post = await BlogPost.findByPk(id,
     {
-        include: [
-          { model: User, as: 'user', attributes: { exclude: ['password'] } },
-          { model: Category, as: 'categories', through: { model: PostCategory, attributes: [] } },
-        ],
+      include: [
+        { model: User, as: 'user', attributes: { exclude: ['password'] } },
+        { model: Category, as: 'categories', through: { model: PostCategory, attributes: [] } },
+      ],
   });
   if (!post) throw new HTTPError(404, 'Post does not exist');
   return post;
