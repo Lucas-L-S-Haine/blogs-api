@@ -28,7 +28,6 @@ const createOne = async (input, userId) => {
   const { id: postId } = newPost.dataValues;
   const postsCategories = categoryIds.map((categoryId) => ({ postId, categoryId }));
   await PostCategory.bulkCreate(postsCategories, { transaction });
-  // await newPost.addCategories(categoryIds, { transaction });
   await transaction.commit();
   return newPost;
 };
