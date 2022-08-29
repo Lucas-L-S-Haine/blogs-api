@@ -12,6 +12,11 @@ const {
   PostsCategories: PostCategory,
 } = models;
 
+sequelize.transaction = jest.fn();
+Category.findAll = jest.fn();
+BlogPost.create = jest.fn();
+PostCategory.bulkCreate = jest.fn();
+
 describe('Test post services', () => {
   describe('createOne', () => {
     it.todo('should return a new post when it is created');
