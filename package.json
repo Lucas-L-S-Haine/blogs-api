@@ -46,6 +46,7 @@
     "eslint-config-airbnb-base": "14.2.0",
     "eslint-plugin-import": "2.22.1",
     "frisby": "2.1.2",
+    "jake": "^10.8.5",
     "jest": "26.0.1",
     "minimist": "^1.2.6",
     "moment": "^2.29.4",
