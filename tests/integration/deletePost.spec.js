@@ -3,9 +3,10 @@ const { resolve } = require('path');
 require('dotenv/config');
 const axios = require('axios');
 
-const { sequelize } = require(`${__dirname}/../../src/models`);
-const seedBlogPosts = require(resolve(__dirname, '../..',
-  'src/seeders/20200812194353-BlogPosts.js'));
+const rootDir = resolve('.');
+
+const { sequelize } = require(`${rootDir}/src/models`);
+const seedBlogPosts = require(`${rootDir}/src/seeders/20200812194353-BlogPosts.js`);
 
 const host = process.env.HOST || '127.0.0.1';
 const port = process.env.PORT || 3000;

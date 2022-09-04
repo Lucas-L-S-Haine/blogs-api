@@ -1,6 +1,11 @@
+const { resolve } = require('path');
+
 require('dotenv/config');
 const axios = require('axios');
-const login = require(`${__dirname}/../../tasks/login`);
+
+const rootDir = resolve('.');
+
+const login = require(`${rootDir}/tasks/login`);
 
 const host = process.env.HOST || '127.0.0.1';
 const port = process.env.PORT || 3000;
