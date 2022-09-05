@@ -23,6 +23,7 @@ task('closeServer', closeServer);
 async function runTests(...parameters) {
   process.env.NODE_ENV = 'test';
   const arguments = [...parameters];
+  arguments.unshift('--runInBand');
 
   await jest.run(arguments, './tests/');
   Task.closeServer.invoke();
