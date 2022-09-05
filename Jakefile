@@ -20,6 +20,9 @@ task('coverage', ['startServer'], runCoverageTests);
 desc('run linter');
 task('lint', runLinter);
 
+desc('run application with nodemon');
+task('dev', runNodemon);
+
 task('startServer', startServer);
 task('closeServer', closeServer);
 
@@ -68,6 +71,16 @@ function handleLinter(error, stdout, _stderr) {
     const format = process.stdout.isTTY ? '\x1b[32m%s\x1b[0m' : '%s';
     console.log(format, '✓');
   }
+}
+
+async function runNodemon(...args) {
+  const nodemon = 'node_modules/.bin/nodemon';
+
+  await spawn(nodemon, [...args], {
+    detached: false,
+    cwd: __dirname,
+    stdio: 'inherit',
+  });
 }
 
 async function startServer() {
