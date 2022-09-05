@@ -60,7 +60,7 @@ function runLinter() {
   execFile(command, args, { encoding: 'utf-8' }, handleLinter);
 }
 
-function handleLinter(error, stdout, stderr) {
+function handleLinter(error, stdout, _stderr) {
   if (error) {
     process.exitCode = error.code;
     console.log(stdout);
