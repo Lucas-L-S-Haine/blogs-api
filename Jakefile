@@ -1,4 +1,4 @@
-const { spawn } = require('child_process');
+const { spawn, execFile } = require('child_process');
 
 const { Task } = require('jake');
 const jest = require('jest');
@@ -16,6 +16,9 @@ task('test', ['startServer'], runTests);
 
 desc('run coverage tests');
 task('coverage', ['startServer'], runCoverageTests);
+
+desc('run linter');
+task('lint', runLinter);
 
 task('startServer', startServer);
 task('closeServer', closeServer);
@@ -41,6 +44,30 @@ async function runCoverageTests() {
   });
 
   Task.closeServer.invoke();
+}
+
+function runLinter() {
+  const command = "node_modules/.bin/eslint";
+  const args = [
+    '--no-inline-config',
+    '--no-error-on-unmatched-pattern',
+    '-c',
+    '.eslintrc.json',
+    '.',
+  ];
+  if (process.stdout.isTTY) args.unshift('--color');
+
+  execFile(command, args, { encoding: 'utf-8' }, handleLinter);
+}
+
+function handleLinter(error, stdout, stderr) {
+  if (error) {
+    process.exitCode = error.code;
+    console.log(stdout);
+  } else {
+    const format = process.stdout.isTTY ? '\x1b[32m%s\x1b[0m' : '%s';
+    console.log(format, '✓');
+  }
 }
 
 async function startServer() {
