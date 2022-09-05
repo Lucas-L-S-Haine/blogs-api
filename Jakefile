@@ -3,7 +3,7 @@ const { spawn } = require('child_process');
 const { Task } = require('jake');
 const jest = require('jest');
 
-desc('default task');
+desc('list tasks');
 task('default', async () => {
   await spawn('jake', ['-t'], { stdio: 'inherit' });
 });
