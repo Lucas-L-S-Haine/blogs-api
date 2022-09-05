@@ -47,7 +47,7 @@ async function runCoverageTests() {
 }
 
 function runLinter() {
-  const command = "node_modules/.bin/eslint";
+  const command = 'node_modules/.bin/eslint';
   const args = [
     '--no-inline-config',
     '--no-error-on-unmatched-pattern',
