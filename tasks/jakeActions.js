@@ -33,7 +33,7 @@ async function runCoverageTests() {
   await spawn('node_modules/.bin/jest', options, {
     env: { NODE_ENV: 'test' },
     detached: false,
-    cwd: __dirname,
+    cwd: '.',
     stdio: ['ignore', 'inherit', 'ignore'],
   });
 
@@ -59,7 +59,7 @@ async function runNodemon(...args) {
 
   await spawn(nodemon, [...args], {
     detached: false,
-    cwd: __dirname,
+    cwd: '.',
     stdio: 'inherit',
   });
 }
@@ -68,7 +68,7 @@ async function startServer() {
   global.nodeProcess = await spawn('node', ['.'], {
     env: { NODE_ENV: 'test' },
     detached: true,
-    cwd: __dirname,
+    cwd: '.',
     stdio: 'ignore',
   });
 }
