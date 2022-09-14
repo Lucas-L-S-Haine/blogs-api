@@ -80,11 +80,11 @@ async function runTests(...parameters) {
   Task.closeServer.invoke();
 }
 
-async function runCoverageTests() {
+function runCoverageTests() {
   const options = ['-c', 'jest-coverage.js'];
   if (process.stdout.isTTY) options.push('--color');
 
-  await spawn('node_modules/.bin/jest', options, {
+  spawn('node_modules/.bin/jest', options, {
     env: { NODE_ENV: 'test' },
     detached: false,
     cwd: '.',
@@ -108,18 +108,18 @@ function runLinter() {
   execFile(command, args, { encoding: 'utf-8' }, handleLinter);
 }
 
-async function runNodemon(...args) {
+function runNodemon(...args) {
   const nodemon = 'node_modules/.bin/nodemon';
 
-  await spawn(nodemon, [...args], {
+  spawn(nodemon, [...args], {
     detached: false,
     cwd: '.',
     stdio: 'inherit',
   });
 }
 
-async function startServer() {
-  global.nodeProcess = await spawn('node', ['.'], {
+function startServer() {
+  global.nodeProcess = spawn('node', ['.'], {
     env: { NODE_ENV: 'test' },
     detached: true,
     cwd: '.',
