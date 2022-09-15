@@ -4,7 +4,10 @@ const jake = require('jake');
 const jest = require('jest');
 const { green, grey } = require('chalk');
 
+const app = require('../src/app');
+
 const { Task } = jake;
+const port = process.env.PORT || 3000;
 
 function getFunctionParameters(action) {
   let result = '';
@@ -118,6 +121,11 @@ function runNodemon(...args) {
   });
 }
 
+function runStart() {
+  app.listen(port, () =>
+    console.log(`Application online on port \x1b[03;94m${port}\x1b[00m!`));
+}
+
 function startBGServer() {
   global.nodeProcess = spawn('node', ['.'], {
     env: { NODE_ENV: 'test' },
@@ -137,6 +145,7 @@ module.exports = {
   runCoverageTests,
   runLinter,
   runNodemon,
+  runStart,
   startBGServer,
   closeBGServer,
 };

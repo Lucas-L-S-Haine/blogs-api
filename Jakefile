@@ -4,6 +4,7 @@ const {
   runCoverageTests,
   runLinter,
   runNodemon,
+  runStart,
   startBGServer,
   closeBGServer,
 } = require('./tasks/jakeActions');
@@ -25,6 +26,9 @@ task('lint', runLinter);
 
 desc('run application with nodemon');
 task('dev', runNodemon);
+
+desc('start server');
+task('start', runStart);
 
 task('startBGServer', startBGServer);
 task('closeBGServer', closeBGServer);
