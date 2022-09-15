@@ -5,6 +5,7 @@ const models = require('../../../src/models');
 jest.mock('../../../src/models');
 const service = require('../../../src/services/loginService');
 const HTTPError = require('../../../src/utils/httpError');
+const MockDataValues = require('../../mocks/mockDataValues');
 
 const { User } = models;
 
@@ -21,10 +22,7 @@ describe('Test login service', () => {
       image: 'https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg',
     };
 
-    const response = {
-      dataValues: { ...hamilton },
-      get: () => hamilton,
-    };
+    const response = new MockDataValues(hamilton);
 
     User.findOne.mockReturnValue(Promise.resolve(response));
   });

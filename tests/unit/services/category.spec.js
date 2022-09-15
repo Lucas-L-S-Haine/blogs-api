@@ -4,6 +4,7 @@ const models = require('../../../src/models');
 jest.mock('../../../src/models');
 const service = require('../../../src/services/categoryService');
 const HTTPError = require('../../../src/utils/httpError');
+const MockDataValues = require('../../mocks/mockDataValues');
 
 const { Categories: Category } = models;
 
@@ -14,14 +15,8 @@ Category.findAll = jest.fn();
 describe('Test category services', () => {
   beforeAll(() => {
     const categoriesList = [
-      {
-        dataValues: { id: 1, name: 'Inovação' },
-        get: () => ({ id: 1, name: 'Inovação' }),
-      },
-      {
-        dataValues: { id: 2, name: 'Escola' },
-        get: () => ({ id: 2, name: 'Escola' }),
-      },
+      new MockDataValues({ id: 1, name: 'Inovação' }),
+      new MockDataValues({ id: 2, name: 'Escola' }),
     ];
 
     Category.create.mockReturnValue(null);
@@ -58,8 +53,8 @@ describe('Test category services', () => {
         { id: 2, name: 'Escola' },
       ];
       const categoriesDataValues = [
-        { dataValues: { id: 1, name: 'Inovação' } },
-        { dataValues: { id: 2, name: 'Escola' } },
+        new MockDataValues({ id: 1, name: 'Inovação' }),
+        new MockDataValues({ id: 2, name: 'Escola' }),
       ];
       const categories = await service.readAll();
 
