@@ -77,7 +77,7 @@ async function runTests(...parameters) {
   args.unshift('--runInBand');
 
   await jest.run(args, './tests/');
-  Task.closeServer.invoke();
+  Task.closeBGServer.invoke();
 }
 
 function runCoverageTests() {
@@ -91,7 +91,7 @@ function runCoverageTests() {
     stdio: ['ignore', 'inherit', 'ignore'],
   });
 
-  Task.closeServer.invoke();
+  Task.closeBGServer.invoke();
 }
 
 function runLinter() {
@@ -118,7 +118,7 @@ function runNodemon(...args) {
   });
 }
 
-function startServer() {
+function startBGServer() {
   global.nodeProcess = spawn('node', ['.'], {
     env: { NODE_ENV: 'test' },
     detached: true,
@@ -127,7 +127,7 @@ function startServer() {
   });
 }
 
-function closeServer() {
+function closeBGServer() {
   global.nodeProcess.kill();
 }
 
@@ -137,6 +137,6 @@ module.exports = {
   runCoverageTests,
   runLinter,
   runNodemon,
-  startServer,
-  closeServer,
+  startBGServer,
+  closeBGServer,
 };

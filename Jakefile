@@ -4,21 +4,21 @@ const {
   runCoverageTests,
   runLinter,
   runNodemon,
-  startServer,
-  closeServer,
+  startBGServer,
+  closeBGServer,
 } = require('./tasks/jakeActions');
 
 desc('list tasks');
 task('default', runDefault);
 
 desc('run tests with jest');
-task('jest', ['startServer'], runTests);
+task('jest', ['startBGServer'], runTests);
 
 desc('alias for "jest"');
-task('test', ['startServer'], runTests);
+task('test', ['startBGServer'], runTests);
 
 desc('run coverage tests');
-task('coverage', ['startServer'], runCoverageTests);
+task('coverage', ['startBGServer'], runCoverageTests);
 
 desc('run linter');
 task('lint', runLinter);
@@ -26,5 +26,5 @@ task('lint', runLinter);
 desc('run application with nodemon');
 task('dev', runNodemon);
 
-task('startServer', startServer);
-task('closeServer', closeServer);
+task('startBGServer', startBGServer);
+task('closeBGServer', closeBGServer);
