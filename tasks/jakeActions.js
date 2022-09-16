@@ -11,7 +11,7 @@ const port = process.env.PORT || 3000;
 
 function getFunctionParameters(action) {
   let result = '';
-  const parameters = action.toString().split('(')[1].split(')')[0];
+  const parameters = action.toString().split('(')[1].split(')')[0].replace(/\s/g, '');
 
   if (parameters !== '') result += `[${parameters}]`;
   return result;
