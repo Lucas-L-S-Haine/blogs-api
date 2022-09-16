@@ -16,7 +16,7 @@ module.exports = {
     password,
     host,
     port,
-    database: 'blogs_api',
+    database: 'blogs_api_dev',
     dialect: 'mysql',
   },
   test: {
