@@ -13,7 +13,7 @@ const port = process.env.PORT || 3000;
 const baseUrl = `http://${host}:${port}`;
 
 describe('Test the DELETE /post/:id endpoint', () => {
-  afterEach(async () => {
+  beforeEach(async () => {
     await seedBlogPosts.down(sequelize.queryInterface);
     await seedBlogPosts.up(sequelize.queryInterface);
   });

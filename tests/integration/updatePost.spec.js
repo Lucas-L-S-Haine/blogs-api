@@ -13,9 +13,12 @@ const port = process.env.PORT || 3000;
 const baseUrl = `http://${host}:${port}`;
 
 describe('Test the PUT /post/:id endpoint', () => {
-  afterAll(async () => {
+  beforeAll (async () => {
     await seedBlogPosts.down(sequelize.queryInterface);
     await seedBlogPosts.up(sequelize.queryInterface);
+  });
+
+  afterAll(async () => {
     sequelize.close();
   });
 
