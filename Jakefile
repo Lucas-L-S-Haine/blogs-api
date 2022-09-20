@@ -9,6 +9,8 @@ const {
   closeBGServer,
 } = require('./tasks/jakeActions');
 
+const dbNamespace = require('./tasks/dbActions');
+
 desc('list tasks');
 task('default', runDefault);
 
@@ -32,3 +34,5 @@ task('start', runStart);
 
 task('startBGServer', startBGServer);
 task('closeBGServer', closeBGServer);
+
+namespace('db', dbNamespace);
