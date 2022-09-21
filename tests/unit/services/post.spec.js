@@ -21,6 +21,7 @@ PostCategory.bulkCreate = jest.fn();
 
 BlogPost.findAll = jest.fn();
 
+BlogPost.findByPk = jest.fn();
 describe('Test post services', () => {
   beforeAll(() => {
     const post1 = {
@@ -50,6 +51,8 @@ describe('Test post services', () => {
     PostCategory.bulkCreate.mockReturnValue(mockPostsCategories);
 
     BlogPost.findAll.mockReturnValue(mockPostList);
+
+    BlogPost.findByPk.mockReturnValue(mockPost);
   });
 
   describe('createOne', () => {
@@ -124,8 +127,35 @@ describe('Test post services', () => {
   });
 
   describe('readOne', () => {
-    it.todo('should throw error when it doesn’t find the requested post');
-    it.todo('should return data on a single post');
+    it('should throw error when it doesn’t find the requested post', async () => {
+      BlogPost.findByPk.mockReturnValueOnce(null);
+
+      try {
+        await service.readOne(5000);
+        fail('function did not throw exception');
+      } catch (error) {
+        expect(error).toBeInstanceOf(HTTPError);
+        expect(error).toHaveProperty('message', 'Post does not exist');
+        expect(error).toHaveProperty('status', 404);
+      }
+    });
+
+    it('should return data on a single post', async () => {
+      const post = {
+        id: 1,
+        title: 'Brand New Post',
+        content: 'I’m adding a new post to the blog!',
+        userId: 1,
+      };
+
+      const result = await service.readOne(1);
+
+      try {
+        expect(result).toEqual(post);
+      } catch {
+        expect(result.dataValues).toEqual(post);
+      }
+    });
   });
 
   describe('updateOne', () => {
