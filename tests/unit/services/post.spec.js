@@ -19,27 +19,59 @@ Category.findAll = jest.fn();
 BlogPost.create = jest.fn();
 PostCategory.bulkCreate = jest.fn();
 
+BlogPost.findAll = jest.fn();
+
 describe('Test post services', () => {
   beforeAll(() => {
-    const mockTransaction = new MockTransaction();
-    const mockCategories = new MockDataValues([{ id: 1 }]);
-    const mockPost = new MockDataValues({
+    const post1 = {
       id: 1,
       title: 'Brand New Post',
       content: 'I’m adding a new post to the blog!',
       userId: 1,
-    });
+    };
+    const post2 = {
+        id: 2,
+        title: 'Another Brand New Post',
+        content: 'This one should throw an error',
+        categoryIds: [5000],
+    };
+
+    const mockTransaction = new MockTransaction();
+    const mockCategories = new MockDataValues([{ id: 1 }]);
+    const mockPost = new MockDataValues(post1);
     const mockPostsCategories = new MockDataValues([
       { postId: 1, categoryId: 1 },
     ]);
+    const mockPostList = new MockDataValues([post1, post2]);
 
     sequelize.transaction.mockReturnValue(mockTransaction);
     Category.findAll.mockReturnValue(mockCategories);
     BlogPost.create.mockReturnValue(mockPost);
     PostCategory.bulkCreate.mockReturnValue(mockPostsCategories);
+
+    BlogPost.findAll.mockReturnValue(mockPostList);
   });
 
   describe('createOne', () => {
+    it('should throw error when it receives any invalid category ids', async () => {
+      const input = {
+        id: 2,
+        title: 'Another Brand New Post',
+        content: 'This one should throw an error',
+        categoryIds: [5000],
+      };
+      const userId = 1;
+
+      try {
+        await service.createOne(input, userId);
+        fail('function did not throw exception');
+      } catch (error) {
+        expect(error).toBeInstanceOf(HTTPError);
+        expect(error).toHaveProperty('message', '"categoryIds" not found');
+        expect(error).toHaveProperty('status', 400);
+      }
+    });
+
     it('should return a new post when it is created', async () => {
       const input = {
         id: 1,
@@ -66,17 +98,45 @@ describe('Test post services', () => {
   });
 
   describe('readAll', () => {
-    it.todo('should return a list of all posts');
+    it('should return a list of all posts', async () => {
+      const post1 = {
+        id: 1,
+        title: 'Brand New Post',
+        content: 'I’m adding a new post to the blog!',
+        userId: 1,
+      };
+      const post2 = {
+          id: 2,
+          title: 'Another Brand New Post',
+          content: 'This one should throw an error',
+          categoryIds: [5000],
+      };
+      const posts = [post1, post2];
+
+      const result = await service.readAll();
+
+      try {
+        expect(result).toEqual(posts);
+      } catch {
+        expect(result.map((post) => post.get())).toEqual(posts);
+      }
+    });
   });
+
   describe('readOne', () => {
+    it.todo('should throw error when it doesn’t find the requested post');
     it.todo('should return data on a single post');
   });
+
   describe('updateOne', () => {
     it.todo('should return data on the newly updated post');
   });
+
   describe('deleteOne', () => {
+    it.todo('should throw error when it doesn’t find the requested post');
     it.todo('should not return anything');
   });
+
   describe('readMany', () => {
     it.todo('should return a list of filtered posts');
   });
