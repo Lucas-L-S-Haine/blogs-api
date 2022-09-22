@@ -1,9 +1,11 @@
 const { fail } = require('assert/strict');
 const jwt = require('jsonwebtoken');
 const models = require('../../../src/models');
+
 jest.mock('../../../src/models');
 const service = require('../../../src/services/userService');
 const HTTPError = require('../../../src/utils/httpError');
+const MockDataValues = require('../../mocks/mockDataValues');
 
 const { User } = models;
 
@@ -27,9 +29,9 @@ describe('Test user services', () => {
       image: 'https://sportbuzz.uol.com.br/media/_versions/gettyimages-52491565_widelg.jpg',
     };
 
-    User.findByPk.mockReturnValue(schumacher);
-    User.findOne.mockReturnValue(hamilton);
-    User.findAll.mockReturnValue([hamilton, schumacher]);
+    User.findByPk.mockReturnValue(new MockDataValues(schumacher));
+    User.findOne.mockReturnValue(new MockDataValues(hamilton));
+    User.findAll.mockReturnValue(new MockDataValues([hamilton, schumacher]));
     User.destroy.mockReturnValue(1);
   });
 
@@ -40,9 +42,9 @@ describe('Test user services', () => {
       try {
         await service.readOne(8000);
         fail('function did not throw exception');
-      } catch(error) {
-        expect(error).toHaveProperty('message', 'User does not exist');
+      } catch (error) {
         expect(error).toBeInstanceOf(HTTPError);
+        expect(error).toHaveProperty('message', 'User does not exist');
         expect(error).toHaveProperty('status', 404);
       }
     });
@@ -57,7 +59,11 @@ describe('Test user services', () => {
 
       const user = await service.readOne(3);
 
-      expect(user).toEqual(schumacher);
+      try {
+        expect(user).toEqual(schumacher);
+      } catch {
+        expect(user.dataValues).toEqual(schumacher);
+      }
     });
   });
 
@@ -71,19 +77,16 @@ describe('Test user services', () => {
         image: 'https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg',
       };
 
-      const dbUser = {
-        dataValues: { ...hamilton },
-        get: () => hamilton,
-      };
+      const dbUser = new MockDataValues(hamilton);
 
       User.findOne.mockReturnValueOnce(Promise.resolve(dbUser));
 
       try {
         await service.createOne(hamilton);
         fail('function did not throw exception');
-      } catch(error) {
-        expect(error).toHaveProperty('message', 'User already registered');
+      } catch (error) {
         expect(error).toBeInstanceOf(HTTPError);
+        expect(error).toHaveProperty('message', 'User already registered');
         expect(error).toHaveProperty('status', 409);
       }
     });
@@ -132,15 +135,21 @@ describe('Test user services', () => {
 
       const result = await service.readAll();
 
-      expect(result[0]).not.toHaveProperty('password');
-      expect(result[1]).not.toHaveProperty('password');
-      expect(result).toEqual(expect.arrayContaining([hamilton, schumacher]));
+      try {
+        expect(result[0]).not.toHaveProperty('password');
+        expect(result[1]).not.toHaveProperty('password');
+        expect(result).toEqual(expect.arrayContaining([hamilton, schumacher]));
+      } catch {
+        expect(result[0].dataValues).not.toHaveProperty('password');
+        expect(result[1].dataValues).not.toHaveProperty('password');
+        expect(result.map((user) => user.get())).toEqual(expect.arrayContaining([hamilton, schumacher]));
+      }
     });
   });
 
   describe('deleteOne', () => {
     it('should not return anything', async () => {
-      email = 'lewishamilton@gmail.com';
+      const email = 'lewishamilton@gmail.com';
 
       const result = await service.deleteOne('lewishamilton@gmail.com');
 

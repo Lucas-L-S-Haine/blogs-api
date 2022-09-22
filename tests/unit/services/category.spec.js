@@ -1,6 +1,6 @@
 const { fail } = require('assert/strict');
-const jwt = require('jsonwebtoken');
 const models = require('../../../src/models');
+
 jest.mock('../../../src/models');
 const service = require('../../../src/services/categoryService');
 const HTTPError = require('../../../src/utils/httpError');
@@ -14,10 +14,10 @@ Category.findAll = jest.fn();
 
 describe('Test category services', () => {
   beforeAll(() => {
-    const categoriesList = [
-      new MockDataValues({ id: 1, name: 'Inovação' }),
-      new MockDataValues({ id: 2, name: 'Escola' }),
-    ];
+    const categoriesList = new MockDataValues([
+      { id: 1, name: 'Inovação' },
+      { id: 2, name: 'Escola' },
+    ]);
 
     Category.create.mockReturnValue(null);
     Category.findOne.mockReturnValue(Promise.resolve({ name: 'Node.js' }));
@@ -26,14 +26,14 @@ describe('Test category services', () => {
 
   describe('createOne', () => {
     it('should throw error when name is not provided', async () => {
-      category = {};
+      const category = {};
 
       try {
         await service.createOne(category);
         fail('function did not throw exception');
-      } catch(error) {
-        expect(error).toHaveProperty('message', '"name" is required');
+      } catch (error) {
         expect(error).toBeInstanceOf(HTTPError);
+        expect(error).toHaveProperty('message', '"name" is required');
         expect(error).toHaveProperty('status', 400);
       }
     });
@@ -52,17 +52,17 @@ describe('Test category services', () => {
         { id: 1, name: 'Inovação' },
         { id: 2, name: 'Escola' },
       ];
-      const categoriesDataValues = [
-        new MockDataValues({ id: 1, name: 'Inovação' }),
-        new MockDataValues({ id: 2, name: 'Escola' }),
-      ];
+      const categoriesDataValues = new MockDataValues([
+        { id: 1, name: 'Inovação' },
+        { id: 2, name: 'Escola' },
+      ]);
       const categories = await service.readAll();
 
       expect(categories).toEqual(expect.any(Array));
 
       try {
         expect(categories).toMatchObject(categoriesList);
-      } catch(error) {
+      } catch {
         expect(categories).toMatchObject(categoriesDataValues);
       }
     });
