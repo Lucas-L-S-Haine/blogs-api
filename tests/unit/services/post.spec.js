@@ -162,7 +162,34 @@ describe('Test post services', () => {
   });
 
   describe('updateOne', () => {
-    it.todo('should return data on the newly updated post');
+    it('should return data on the newly updated post', async () => {
+      const input = {
+        id: 1,
+        userId: 1,
+        title: 'Edited Post',
+        content: 'I’m editing a post for a unit test',
+      };
+      const originalPost = {
+        id: 1,
+        userId: 1,
+        title: 'Brand New Post',
+        content: 'I’m adding a new post to the blog!',
+      };
+
+      const mockOriginalPost = new MockDataValues(originalPost);
+      const mockNewPost = new MockDataValues(input);
+
+      BlogPost.findByPk.mockReturnValueOnce(mockOriginalPost);
+      BlogPost.findByPk.mockReturnValueOnce(mockNewPost);
+
+      const result = await service.updateOne(input);
+
+      try {
+        expect(result).toEqual(input);
+      } catch {
+        expect(result.dataValues).toEqual(input);
+      }
+    });
   });
 
   describe('deleteOne', () => {
