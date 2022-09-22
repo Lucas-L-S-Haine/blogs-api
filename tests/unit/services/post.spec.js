@@ -164,7 +164,19 @@ describe('Test post services', () => {
   });
 
   describe('deleteOne', () => {
-    it.todo('should throw error when it doesn’t find the requested post');
+    it('should throw error when it doesn’t find the requested post', async () => {
+      BlogPost.findByPk.mockReturnValueOnce(null);
+
+      try {
+        await service.deleteOne(5000);
+        fail('function did not throw exception');
+      } catch (error) {
+        expect(error).toBeInstanceOf(HTTPError);
+        expect(error).toHaveProperty('message', 'Post does not exist');
+        expect(error).toHaveProperty('status', 404);
+      }
+    });
+
     it('should not return anything', async () => {
       const input = { id: 1, userId: 1 };
 
