@@ -7,7 +7,12 @@ const nameDescriptor = {
 
 class MockDataObject {
   constructor(dataValues) {
-    this.dataValues = dataValues;
+    Object.defineProperty(this, 'dataValues', {
+      value: dataValues,
+      writable: false,
+      enumerable: false,
+      configurable: true,
+    });
     for (const key in dataValues) {
       this[key] = dataValues[key];
     }
