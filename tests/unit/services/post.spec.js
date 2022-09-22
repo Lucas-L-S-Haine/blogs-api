@@ -24,6 +24,39 @@ BlogPost.findByPk = jest.fn();
 BlogPost.update = jest.fn();
 BlogPost.destroy = jest.fn();
 
+const allPosts = [
+  {
+    id: 1,
+    title: 'Post do Ano',
+    content: 'Melhor post do ano',
+    userId: 2,
+    published: '2011-08-01T19:58:00.000Z',
+    updated: '2011-08-01T19:58:51.000Z',
+    user: {
+      id: 2,
+      displayName: 'Lewis Hamilton',
+      email: 'lewishamilton@gmail.com',
+      image: 'https://upload.wikimedia.org/wikipedia/commons/1/18/Lewis_Hamilton_2016_Malaysia_2.jpg'
+    },
+    categories: []
+  },
+  {
+    id: 2,
+    title: 'Vamos que vamos',
+    content: 'Foguete não tem ré',
+    userId: 3,
+    published: '2011-08-01T19:58:00.000Z',
+    updated: '2011-08-01T19:58:51.000Z',
+    user: {
+      id: 3,
+      displayName: 'Michael Schumacher',
+      email: 'MichaelSchumacher@gmail.com',
+      image: 'https://sportbuzz.uol.com.br/media/_versions/gettyimages-52491565_widelg.jpg'
+    },
+    categories: []
+  }
+];
+
 describe('Test post services', () => {
   beforeAll(() => {
     const post1 = {
@@ -33,10 +66,10 @@ describe('Test post services', () => {
       userId: 1,
     };
     const post2 = {
-        id: 2,
-        title: 'Another Brand New Post',
-        content: 'This one should throw an error',
-        categoryIds: [5000],
+      id: 2,
+      title: 'Another Brand New Post',
+      content: 'This one should throw an error',
+      categoryIds: [5000],
     };
 
     const mockTransaction = new MockTransaction();
@@ -45,14 +78,15 @@ describe('Test post services', () => {
     const mockPostsCategories = new MockDataValues([
       { postId: 1, categoryId: 1 },
     ]);
-    const mockPostList = new MockDataValues([post1, post2]);
+    const mockPostList = new MockDataValues([post1]);
+    const mockAllPosts = new MockDataValues(allPosts);
 
     sequelize.transaction.mockReturnValue(mockTransaction);
     Category.findAll.mockReturnValue(mockCategories);
     BlogPost.create.mockReturnValue(mockPost);
     PostCategory.bulkCreate.mockReturnValue(mockPostsCategories);
 
-    BlogPost.findAll.mockReturnValue(mockPostList);
+    BlogPost.findAll.mockReturnValue(mockAllPosts);
     BlogPost.findByPk.mockReturnValue(mockPost);
     BlogPost.update.mockReturnValue(Promise.resolve(1));
     BlogPost.destroy.mockReturnValue(Promise.resolve(1));
@@ -105,26 +139,12 @@ describe('Test post services', () => {
 
   describe('readAll', () => {
     it('should return a list of all posts', async () => {
-      const post1 = {
-        id: 1,
-        title: 'Brand New Post',
-        content: 'I’m adding a new post to the blog!',
-        userId: 1,
-      };
-      const post2 = {
-          id: 2,
-          title: 'Another Brand New Post',
-          content: 'This one should throw an error',
-          categoryIds: [5000],
-      };
-      const posts = [post1, post2];
-
       const result = await service.readAll();
 
       try {
-        expect(result).toEqual(posts);
+        expect(result).toEqual(allPosts);
       } catch {
-        expect(result.map((post) => post.get())).toEqual(posts);
+        expect(result.map((post) => post.get())).toEqual(allPosts);
       }
     });
   });
@@ -216,6 +236,34 @@ describe('Test post services', () => {
   });
 
   describe('readMany', () => {
-    it.todo('should return a list of filtered posts');
+    it('should return a list of filtered posts', async () => {
+      const queriedPosts = [
+        {
+          id: 2,
+          title: 'Vamos que vamos',
+          content: 'Foguete não tem ré',
+          userId: 3,
+          published: '2011-08-01T19:58:00.000Z',
+          updated: '2011-08-01T19:58:51.000Z',
+          user: {
+            id: 3,
+            displayName: 'Michael Schumacher',
+            email: 'MichaelSchumacher@gmail.com',
+            image: 'https://sportbuzz.uol.com.br/media/_versions/gettyimages-52491565_widelg.jpg'
+          },
+          categories: []
+        }
+      ];
+
+      BlogPost.findAll.mockReturnValueOnce(new MockDataValues(queriedPosts));
+
+      const result = await service.readMany('foguete');
+
+      try {
+        expect(result).toEqual(queriedPosts);
+      } catch {
+        expect(result.map((post) => post.get())).toEqual(queriedPosts);
+      }
+    });
   });
 });
