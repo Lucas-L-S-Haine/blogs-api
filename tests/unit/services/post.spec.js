@@ -20,8 +20,9 @@ BlogPost.create = jest.fn();
 PostCategory.bulkCreate = jest.fn();
 
 BlogPost.findAll = jest.fn();
-
 BlogPost.findByPk = jest.fn();
+BlogPost.update = jest.fn();
+BlogPost.destroy = jest.fn();
 
 describe('Test post services', () => {
   beforeAll(() => {
@@ -52,8 +53,9 @@ describe('Test post services', () => {
     PostCategory.bulkCreate.mockReturnValue(mockPostsCategories);
 
     BlogPost.findAll.mockReturnValue(mockPostList);
-
     BlogPost.findByPk.mockReturnValue(mockPost);
+    BlogPost.update.mockReturnValue(Promise.resolve(1));
+    BlogPost.destroy.mockReturnValue(Promise.resolve(1));
   });
 
   describe('createOne', () => {
