@@ -8,6 +8,9 @@ const nameDescriptor = {
 class MockDataObject {
   constructor(dataValues) {
     this.dataValues = dataValues;
+    for (const key in dataValues) {
+      this[key] = dataValues[key];
+    }
     return this;
   }
 
