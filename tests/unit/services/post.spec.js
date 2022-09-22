@@ -22,6 +22,7 @@ PostCategory.bulkCreate = jest.fn();
 BlogPost.findAll = jest.fn();
 
 BlogPost.findByPk = jest.fn();
+
 describe('Test post services', () => {
   beforeAll(() => {
     const post1 = {
@@ -164,7 +165,13 @@ describe('Test post services', () => {
 
   describe('deleteOne', () => {
     it.todo('should throw error when it doesn’t find the requested post');
-    it.todo('should not return anything');
+    it('should not return anything', async () => {
+      const input = { id: 1, userId: 1 };
+
+      const result = await service.deleteOne(input);
+
+      expect(result).toBeUndefined();
+    });
   });
 
   describe('readMany', () => {
