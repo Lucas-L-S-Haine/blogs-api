@@ -1,5 +1,5 @@
+const jwt = require('jsonwebtoken');
 const service = require('../services/postService');
-const { readToken } = require('../auth');
 
 const readOne = (req, res, next) => service
   .readOne(req.params.id)
@@ -20,7 +20,7 @@ const createOne = async (req, res, next) => {
   try {
     const userInput = req.body;
     const { authorization: token } = req.headers;
-    const { id: userId } = readToken(token);
+    const { id: userId } = jwt.decode(token);
     const blogPost = await service.createOne(userInput, userId);
     return res.status(201).json(blogPost);
   } catch (err) {
@@ -33,7 +33,7 @@ const updateOne = async (req, res, next) => {
     const userInput = req.body;
     const { authorization: token } = req.headers;
     const { id } = req.params;
-    const { id: userId } = readToken(token);
+    const { id: userId } = jwt.decode(token);
     userInput.id = Number(id);
     userInput.userId = userId;
     const blogPost = await service.updateOne(userInput);
@@ -48,7 +48,7 @@ const deleteOne = async (req, res, next) => {
     const userInput = {};
     const { authorization: token } = req.headers;
     const { id } = req.params;
-    const { id: userId } = readToken(token);
+    const { id: userId } = jwt.decode(token);
     userInput.id = Number(id);
     userInput.userId = userId;
     await service.deleteOne(userInput);

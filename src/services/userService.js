@@ -1,8 +1,12 @@
+require('dotenv/config');
+const jwt = require('jsonwebtoken');
 const { hash } = require('bcryptjs');
+const { jwtConfig } = require('../auth');
 const { User } = require('../models');
-const { newToken } = require('../auth');
 const { userValidate } = require('../validations');
 const HTTPError = require('../utils/httpError.js');
+
+const secret = process.env.JWT_SECRET;
 
 const readOne = async (id) => {
   const user = await User.findByPk(id, { attributes: { exclude: ['password'] } });
@@ -28,7 +32,7 @@ const createOne = async (user) => {
   await User.create(userData);
   const { id } = await User.findOne({ where: { email: user.email } });
   delete userData.password;
-  const token = newToken({ id, ...userData });
+  const token = jwt.sign({ id, ...userData }, secret, jwtConfig);
   return token;
 };
 

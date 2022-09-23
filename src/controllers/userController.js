@@ -1,5 +1,5 @@
+const jwt = require('jsonwebtoken');
 const service = require('../services/userService');
-const { readToken } = require('../auth');
 
 const readOne = (req, res, next) => service
   .readOne(req.params.id)
@@ -19,7 +19,7 @@ const createOne = (req, res, next) => service
 const deleteOne = async (req, res, next) => {
   try {
     const { authorization: token } = req.headers;
-    const { email } = readToken(token);
+    const { email } = jwt.decode(token);
     await service.deleteOne(email);
     return res.status(204).send();
   } catch (err) {

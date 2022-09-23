@@ -1,8 +1,12 @@
+require('dotenv/config');
+const jwt = require('jsonwebtoken');
 const { compare } = require('bcryptjs');
+const { jwtConfig } = require('../auth');
 const { User } = require('../models');
-const { newToken } = require('../auth');
 const { loginValidate } = require('../validations');
 const HTTPError = require('../utils/httpError');
+
+const secret = process.env.JWT_SECRET;
 
 const login = async (loginData) => {
   loginValidate(loginData);
@@ -14,7 +18,7 @@ const login = async (loginData) => {
   const loginMatches = await compare(loginData.password, user.password);
   if (!loginMatches) throw new HTTPError(400, 'Invalid fields');
   const { password: _, ...data } = user;
-  const token = newToken(data);
+  const token = jwt.sign(data, secret, jwtConfig);
   return token;
 };
 
