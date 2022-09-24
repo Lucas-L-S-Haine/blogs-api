@@ -74,9 +74,8 @@ function handleLinter(error, stdout, _stderr) {
   }
 }
 
-async function runTests(...parameters) {
+async function runTests(...args) {
   process.env.NODE_ENV = 'test';
-  const args = [...parameters];
   args.unshift('--runInBand');
 
   await jest.run(args, './tests/');
