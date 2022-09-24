@@ -5,6 +5,7 @@ const service = require('../../../src/services/postService');
 const HTTPError = require('../../../src/utils/httpError');
 const MockTransaction = require('../../mocks/mockTransaction');
 const MockDataValues = require('../../mocks/mockDataValues');
+require('../../../tasks/extendJest');
 
 const {
   sequelize,
@@ -107,8 +108,8 @@ describe('Test post services', () => {
         fail('function did not throw exception');
       } catch (error) {
         expect(error).toBeInstanceOf(HTTPError);
-        expect(error).toHaveProperty('message', '"categoryIds" not found');
         expect(error).toHaveProperty('status', 400);
+        expect(error).toHaveProperty('message', '"categoryIds" not found');
       }
     });
 
@@ -129,11 +130,7 @@ describe('Test post services', () => {
         userId: 1,
       };
 
-      try {
-        expect(result).toEqual(expectedResult);
-      } catch {
-        expect(result.dataValues).toEqual(expectedResult);
-      }
+      expect(result).toMatchDataValues(expectedResult);
     });
   });
 
@@ -141,11 +138,7 @@ describe('Test post services', () => {
     it('should return a list of all posts', async () => {
       const result = await service.readAll();
 
-      try {
-        expect(result).toEqual(allPosts);
-      } catch {
-        expect(result.map((post) => post.get())).toEqual(allPosts);
-      }
+      expect(result).toMatchDataValues(allPosts);
     });
   });
 
@@ -158,8 +151,8 @@ describe('Test post services', () => {
         fail('function did not throw exception');
       } catch (error) {
         expect(error).toBeInstanceOf(HTTPError);
-        expect(error).toHaveProperty('message', 'Post does not exist');
         expect(error).toHaveProperty('status', 404);
+        expect(error).toHaveProperty('message', 'Post does not exist');
       }
     });
 
@@ -173,11 +166,7 @@ describe('Test post services', () => {
 
       const result = await service.readOne(1);
 
-      try {
-        expect(result).toEqual(post);
-      } catch {
-        expect(result.dataValues).toEqual(post);
-      }
+      expect(result).toMatchDataValues(post);
     });
   });
 
@@ -204,11 +193,7 @@ describe('Test post services', () => {
 
       const result = await service.updateOne(input);
 
-      try {
-        expect(result).toEqual(input);
-      } catch {
-        expect(result.dataValues).toEqual(input);
-      }
+      expect(result).toMatchDataValues(input);
     });
   });
 
@@ -221,8 +206,8 @@ describe('Test post services', () => {
         fail('function did not throw exception');
       } catch (error) {
         expect(error).toBeInstanceOf(HTTPError);
-        expect(error).toHaveProperty('message', 'Post does not exist');
         expect(error).toHaveProperty('status', 404);
+        expect(error).toHaveProperty('message', 'Post does not exist');
       }
     });
 
@@ -259,11 +244,7 @@ describe('Test post services', () => {
 
       const result = await service.readMany('foguete');
 
-      try {
-        expect(result).toEqual(queriedPosts);
-      } catch {
-        expect(result.map((post) => post.get())).toEqual(queriedPosts);
-      }
+      expect(result).toMatchDataValues(queriedPosts);
     });
   });
 });

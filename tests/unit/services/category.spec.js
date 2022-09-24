@@ -5,6 +5,7 @@ jest.mock('../../../src/models');
 const service = require('../../../src/services/categoryService');
 const HTTPError = require('../../../src/utils/httpError');
 const MockDataValues = require('../../mocks/mockDataValues');
+require('../../../tasks/extendJest');
 
 const { Categories: Category } = models;
 
@@ -33,8 +34,8 @@ describe('Test category services', () => {
         fail('function did not throw exception');
       } catch (error) {
         expect(error).toBeInstanceOf(HTTPError);
-        expect(error).toHaveProperty('message', '"name" is required');
         expect(error).toHaveProperty('status', 400);
+        expect(error).toHaveProperty('message', '"name" is required');
       }
     });
 
@@ -52,19 +53,10 @@ describe('Test category services', () => {
         { id: 1, name: 'Inovação' },
         { id: 2, name: 'Escola' },
       ];
-      const categoriesDataValues = new MockDataValues([
-        { id: 1, name: 'Inovação' },
-        { id: 2, name: 'Escola' },
-      ]);
+
       const categories = await service.readAll();
 
-      expect(categories).toEqual(expect.any(Array));
-
-      try {
-        expect(categories).toMatchObject(categoriesList);
-      } catch {
-        expect(categories).toMatchObject(categoriesDataValues);
-      }
+      expect(categories).toMatchDataValues(categoriesList);
     });
   });
 });

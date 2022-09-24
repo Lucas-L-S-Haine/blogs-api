@@ -39,9 +39,9 @@ describe('Test login service', () => {
       await service.login(loginData);
       fail('function did not throw exception');
     } catch (error) {
-      expect(error).toHaveProperty('message', 'Invalid fields');
       expect(error).toBeInstanceOf(HTTPError);
       expect(error).toHaveProperty('status', 400);
+      expect(error).toHaveProperty('message', 'Invalid fields');
     }
   });
 
@@ -54,9 +54,9 @@ describe('Test login service', () => {
     try {
       await service.login(loginData);
     } catch (error) {
-      expect(error).toHaveProperty('message', 'Invalid fields');
       expect(error).toBeInstanceOf(HTTPError);
       expect(error).toHaveProperty('status', 400);
+      expect(error).toHaveProperty('message', 'Invalid fields');
     }
   });
 

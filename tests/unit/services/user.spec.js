@@ -6,6 +6,7 @@ jest.mock('../../../src/models');
 const service = require('../../../src/services/userService');
 const HTTPError = require('../../../src/utils/httpError');
 const MockDataValues = require('../../mocks/mockDataValues');
+require('../../../tasks/extendJest');
 
 const { User } = models;
 
@@ -44,8 +45,8 @@ describe('Test user services', () => {
         fail('function did not throw exception');
       } catch (error) {
         expect(error).toBeInstanceOf(HTTPError);
-        expect(error).toHaveProperty('message', 'User does not exist');
         expect(error).toHaveProperty('status', 404);
+        expect(error).toHaveProperty('message', 'User does not exist');
       }
     });
 
@@ -59,11 +60,7 @@ describe('Test user services', () => {
 
       const user = await service.readOne(3);
 
-      try {
-        expect(user).toEqual(schumacher);
-      } catch {
-        expect(user.dataValues).toEqual(schumacher);
-      }
+      expect(user).toMatchDataValues(schumacher);
     });
   });
 
@@ -86,8 +83,8 @@ describe('Test user services', () => {
         fail('function did not throw exception');
       } catch (error) {
         expect(error).toBeInstanceOf(HTTPError);
-        expect(error).toHaveProperty('message', 'User already registered');
         expect(error).toHaveProperty('status', 409);
+        expect(error).toHaveProperty('message', 'User already registered');
       }
     });
 
@@ -135,15 +132,11 @@ describe('Test user services', () => {
 
       const result = await service.readAll();
 
-      try {
-        expect(result[0]).not.toHaveProperty('password');
-        expect(result[1]).not.toHaveProperty('password');
-        expect(result).toEqual(expect.arrayContaining([hamilton, schumacher]));
-      } catch {
-        expect(result[0].dataValues).not.toHaveProperty('password');
-        expect(result[1].dataValues).not.toHaveProperty('password');
-        expect(result.map((user) => user.get())).toEqual(expect.arrayContaining([hamilton, schumacher]));
-      }
+      expect(result).toMatchDataValues([hamilton, schumacher]);
+      result.forEach((entry) => {
+        expect(entry).not.toHaveProperty('password');
+        expect(entry).not.toHaveProperty('dataValues.password');
+      });
     });
   });
 
