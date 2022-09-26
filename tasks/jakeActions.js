@@ -22,7 +22,7 @@ async function runTests(...args) {
   process.env.NODE_ENV = 'test';
   args.unshift('--runInBand');
 
-  await jest.run(args, './tests/');
+  await jest.run(args, 'tests/');
   Task.closeBGServer.invoke();
 }
 
