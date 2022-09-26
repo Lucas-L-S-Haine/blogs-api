@@ -43,7 +43,7 @@
     "minimist": "^1.2.6",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.37",
-    "nodemon": "^2.0.19",
+    "nodemon": "^2.0.20",
     "sequelize-cli": "6.2.0",
     "supertest": "4.0.2"
   }
