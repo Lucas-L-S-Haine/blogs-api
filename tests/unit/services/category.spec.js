@@ -21,8 +21,8 @@ describe('Test category services', () => {
     ]);
 
     Category.create.mockReturnValue(null);
-    Category.findOne.mockReturnValue(Promise.resolve({ name: 'Node.js' }));
-    Category.findAll.mockReturnValue(Promise.resolve(categoriesList));
+    Category.findOne.mockResolvedValue({ name: 'Node.js' });
+    Category.findAll.mockResolvedValue(categoriesList);
   });
 
   describe('createOne', () => {

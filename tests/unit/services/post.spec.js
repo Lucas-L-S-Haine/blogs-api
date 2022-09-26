@@ -89,8 +89,8 @@ describe('Test post services', () => {
 
     BlogPost.findAll.mockReturnValue(mockAllPosts);
     BlogPost.findByPk.mockReturnValue(mockPost);
-    BlogPost.update.mockReturnValue(Promise.resolve(1));
-    BlogPost.destroy.mockReturnValue(Promise.resolve(1));
+    BlogPost.update.mockResolvedValue(1);
+    BlogPost.destroy.mockResolvedValue(1);
   });
 
   describe('createOne', () => {

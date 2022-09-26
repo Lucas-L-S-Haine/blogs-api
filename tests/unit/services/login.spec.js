@@ -24,11 +24,11 @@ describe('Test login service', () => {
 
     const response = new MockDataValues(hamilton);
 
-    User.findOne.mockReturnValue(Promise.resolve(response));
+    User.findOne.mockResolvedValue(response);
   });
 
   it('should throw an error when email is not found in the database', async () => {
-    User.findOne.mockReturnValueOnce(Promise.resolve(null));
+    User.findOne.mockResolvedValueOnce(null);
 
     const loginData = {
       email: 'lewishamilton@gmail.com',

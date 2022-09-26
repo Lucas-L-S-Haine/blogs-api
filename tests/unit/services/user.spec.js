@@ -76,7 +76,7 @@ describe('Test user services', () => {
 
       const dbUser = new MockDataValues(hamilton);
 
-      User.findOne.mockReturnValueOnce(Promise.resolve(dbUser));
+      User.findOne.mockResolvedValueOnce(dbUser);
 
       try {
         await service.createOne(hamilton);
@@ -92,7 +92,7 @@ describe('Test user services', () => {
       const secret = process.env.JWT_SECRET;
       expect(secret).toBeTruthy();
 
-      User.findOne.mockReturnValueOnce(Promise.resolve(null));
+      User.findOne.mockResolvedValueOnce(null);
 
       const hamilton = {
         id: 2,
