@@ -3,14 +3,6 @@
   "version": "1.1.0",
   "private": true,
   "main": "./src/index.js",
-  "scripts": {
-    "start": "node .",
-    "drop": "npx sequelize-cli --env test db:drop $",
-    "seed": "npx sequelize-cli --env test db:seed:all $",
-    "precreate": "node tasks/createDatabase.js",
-    "create": "npx sequelize-cli --env development db:migrate $",
-    "postcreate": "npx sequelize-cli --env test db:migrate $"
-  },
   "nodemonConfig": {
     "ignore": [
       "tests/*",
