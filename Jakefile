@@ -1,5 +1,4 @@
 const {
-  runDefault,
   runTests,
   runCoverageTests,
   runLinter,
@@ -11,8 +10,7 @@ const {
 
 const dbNamespace = require('./tasks/dbActions');
 
-desc('list tasks');
-task('default', runDefault);
+task('default', runStart);
 
 desc('run tests with jest');
 task('jest', ['startBGServer'], runTests);
