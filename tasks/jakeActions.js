@@ -1,4 +1,4 @@
-const { spawn, execFile } = require('child_process');
+const { spawn, spawnSync, execFile } = require('child_process');
 
 const jake = require('jake');
 const jest = require('jest');
@@ -30,7 +30,7 @@ function runCoverageTests() {
   const options = ['-c', 'jest-coverage.js'];
   if (process.stdout.isTTY) options.push('--color');
 
-  spawn('node_modules/.bin/jest', options, {
+  spawnSync('node_modules/.bin/jest', options, {
     env: { NODE_ENV: 'test' },
     detached: false,
     cwd: '.',
