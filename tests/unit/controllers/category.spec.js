@@ -1,4 +1,4 @@
-const controller = require('../../../src/controllers/categoryController')
+const controller = require('../../../src/controllers/categoryController');
 const service = require('../../../src/services/categoryService');
 const errorHandler = require('../../../src/middlewares/errorHandler');
 const HTTPError = require('../../../src/utils/httpError');

@@ -1,6 +1,6 @@
 const fs = require('fs');
 const jwt = require('jsonwebtoken');
-const controller = require('../../../src/controllers/userController')
+const controller = require('../../../src/controllers/userController');
 const service = require('../../../src/services/userService');
 const errorHandler = require('../../../src/middlewares/errorHandler');
 const HTTPError = require('../../../src/utils/httpError');

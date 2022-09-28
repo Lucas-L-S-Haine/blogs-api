@@ -1,5 +1,5 @@
 const fs = require('fs');
-const controller = require('../../../src/controllers/loginController')
+const controller = require('../../../src/controllers/loginController');
 const service = require('../../../src/services/loginService');
 const errorHandler = require('../../../src/middlewares/errorHandler');
 const HTTPError = require('../../../src/utils/httpError');
