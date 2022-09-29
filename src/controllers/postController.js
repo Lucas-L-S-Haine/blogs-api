@@ -24,7 +24,7 @@ const createOne = async (req, res, next) => {
     const blogPost = await service.createOne(userInput, userId);
     return res.status(201).json(blogPost);
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
@@ -39,7 +39,7 @@ const updateOne = async (req, res, next) => {
     const blogPost = await service.updateOne(userInput);
     return res.status(200).json(blogPost);
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
@@ -54,7 +54,7 @@ const deleteOne = async (req, res, next) => {
     await service.deleteOne(userInput);
     return res.status(204).send();
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 

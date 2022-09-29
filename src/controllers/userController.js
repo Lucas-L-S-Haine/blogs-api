@@ -23,7 +23,7 @@ const deleteOne = async (req, res, next) => {
     await service.deleteOne(email);
     return res.status(204).send();
   } catch (err) {
-    next(err);
+    return next(err);
   }
 };
 
