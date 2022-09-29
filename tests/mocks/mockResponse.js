@@ -8,9 +8,7 @@ class MockResponse {
   }
 
   send(response) {
-    for (const key in response) {
-      this[key] = response[key];
-    }
+    this.serverResponse = response
 
     return this;
   }
