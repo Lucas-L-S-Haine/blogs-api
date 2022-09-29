@@ -120,10 +120,23 @@ describe('Test user controllers', () => {
       const req = { headers: { authorization: token } };
       const res = new MockResponse();
 
-      const { statusCode, serverResponse } = await controller.deleteOne(req, res, console.warn);
+      const { statusCode, serverResponse } = await controller.deleteOne(req, res, null);
 
       expect(statusCode).toBe(204);
       expect(serverResponse).toBeUndefined();
+    });
+
+    it('should return status and error message in case of failure', async () => {
+      service.deleteOne.mockRejectedValueOnce(new HTTPError(401, 'Expired or invalid token'));
+
+      const req = { headers: { authorization: token } };
+      const res = new MockResponse();
+      const next = new MockNextFunction(401, 'Expired or invalid token');
+
+      const { statusCode, serverResponse } = await controller.deleteOne(req, res, next);
+
+      expect(statusCode).toBe(401);
+      expect(serverResponse).toEqual({ message: 'Expired or invalid token' });
     });
   });
 });
