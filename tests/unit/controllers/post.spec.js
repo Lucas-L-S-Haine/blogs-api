@@ -209,10 +209,30 @@ describe('Test post controllers', () => {
   });
 
   describe('deleteOne', () => {
-    it.skip('should return status 204 and no message', async () => {
+    it('should return status 204 and no message', async () => {
+      const req = {
+        headers: { authorization: token },
+        params: { id: '3' },
+      };
+      const res = new MockResponse();
+
+      const { statusCode, serverResponse } = await controller.deleteOne(req, res, null);
+
+      expect(statusCode).toBe(204);
+      expect(serverResponse).toBeUndefined();
     });
 
-    it.skip('should return status and error message in case of failure', async () => {
+    it('should return status and error message in case of failure', async () => {
+      const req = {
+        params: { id: '3' },
+      };
+      const res = new MockResponse();
+      const next = new MockNextFunction(401, 'Unauthorized user');
+
+      const { statusCode, serverResponse } = await controller.deleteOne(req, res, next);
+
+      expect(statusCode).toBe(401);
+      expect(serverResponse).toEqual({ message: 'Unauthorized user' });
     });
   });
 });
