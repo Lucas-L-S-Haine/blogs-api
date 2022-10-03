@@ -51,11 +51,28 @@ const newPost = {
   categoryIds: [1]
 };
 
+const updatedPost = {
+  title: 'Unit Test updateOne',
+  content: 'We’re testing the updateOne function!'
+};
+
 const createPostResponse = {
   id: 3,
   title: 'Back to unit tests',
   content: 'Let’s inovate!',
   userId: 2,
+};
+
+const updatePostResponse = {
+  title: 'Unit Test updateOne',
+  content: 'We’re testing the updateOne function!',
+  userId: 2,
+  categories: [
+    {
+      id: 1,
+      name: 'Inovação'
+    }
+  ]
 };
 
 const payload = {
@@ -73,6 +90,8 @@ describe('Test post controllers', () => {
     service.readMany.mockResolvedValue([post]);
     service.readAll.mockResolvedValue([post, post2]);
     service.createOne.mockResolvedValue(createPostResponse);
+    service.updateOne.mockResolvedValue(updatePostResponse);
+    service.deleteOne.mockResolvedValue(undefined);
 
     jwt.decode.mockReturnValue(payload);
   });
@@ -160,10 +179,32 @@ describe('Test post controllers', () => {
   });
 
   describe('updateOne', () => {
-    it.skip('should return updated post', async () => {
+    it('should return updated post', async () => {
+      const req = {
+        body: updatedPost,
+        headers: { authorization: token },
+        params: { id: '3' },
+      };
+      const res = new MockResponse();
+
+      const { statusCode, serverResponse } = await controller.updateOne(req, res, null);
+
+      expect(statusCode).toBe(200);
+      expect(serverResponse).toEqual(updatePostResponse);
     });
 
-    it.skip('should return status and error message in case of failure', async () => {
+    it('should return status and error message in case of failure', async () => {
+      const req = {
+        body: updatedPost,
+        params: { id: '3' },
+      };
+      const res = new MockResponse();
+      const next = new MockNextFunction(401, 'Unauthorized user');
+
+      const { statusCode, serverResponse } = await controller.updateOne(req, res, next);
+
+      expect(statusCode).toBe(401);
+      expect(serverResponse).toEqual({ message: 'Unauthorized user' });
     });
   });
 
