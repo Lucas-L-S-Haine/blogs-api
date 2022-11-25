@@ -34,25 +34,26 @@ present in `.env.template`. It is necessary to provide `MYSQL_USER` and
 Once you have completed the previous steps, you can create the database, along
 with all the tables using the command:
 ```sh
-npm run create
+npx jake create
 ```
 Finally, run the application:
 ```sh
-npm start
+npx jake
 ```
 Now you can make requests to the API through the URL `localhost:3000`.
 
 ## Testing Project
 
-If you want to run the automated tests, you can populate the test database with:
+If you want to run the automated tests, you can create and populate the test
+database with:
 ```sh
-npm run seed
+npx jake seed --env=test
 ```
 Then run the automated tests with:
 ```sh
-npm test
+npx jake jest
 ```
 To get the test coverage:
 ```sh
-npm run test-coverage
+npx jake coverage
 ```
