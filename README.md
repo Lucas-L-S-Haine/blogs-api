@@ -47,7 +47,7 @@ Now you can make requests to the API through the URL `localhost:3000`.
 If you want to run the automated tests, you can create and populate the test
 database with:
 ```sh
-npx jake seed --env=test
+npx jake seed env=test
 ```
 Then run the automated tests with:
 ```sh
