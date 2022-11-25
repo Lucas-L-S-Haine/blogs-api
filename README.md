@@ -18,8 +18,7 @@ The complete list of technologies used:
 ## Run Project
 
 In order to run this project, you're going to need git, node and npm installed
-locally.
-First of all, clone the project, and cd into the new directory:
+locally. First of all, clone the project, and cd into the new directory:
 ```sh
 git clone https://github.com/Lucas-L-S-Haine/28-blogs-api.git blogs-api
 cd blogs-api
