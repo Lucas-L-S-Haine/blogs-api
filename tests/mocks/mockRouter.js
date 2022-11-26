@@ -1,6 +1,6 @@
 class MockRouter {
-  constructor() {
-    return {};
+  constructor(app) {
+    this.app = app;
   }
 }
 
