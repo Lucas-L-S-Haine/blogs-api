@@ -1,11 +1,4 @@
-const nameDescriptor = {
-  value: 'MockDataValues',
-  writable: false,
-  enumerable: false,
-  configurable: true,
-};
-
-class MockDataObject {
+const MockDataObject = class MockDataValues {
   constructor(dataValues) {
     Object.defineProperty(this, 'dataValues', {
       value: dataValues,
@@ -24,16 +17,11 @@ class MockDataObject {
   }
 }
 
-class MockDataList {
+const MockDataList = class MockDataValues {
   constructor(dataValues) {
     return dataValues.map((value) => new MockDataObject(value));
   }
 }
-
-delete MockDataObject.name;
-delete MockDataList.name;
-Object.defineProperty(MockDataObject, 'name', nameDescriptor);
-Object.defineProperty(MockDataList, 'name', nameDescriptor);
 
 class MockDataValues {
   constructor(dataValues) {
